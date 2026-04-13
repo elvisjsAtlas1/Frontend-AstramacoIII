@@ -1,0 +1,144 @@
+<div class="container">
+
+  <!-- 📊 LISTADO -->
+  <div class="card">
+    <div class="card-header">
+      <h2>Control de Documentos</h2>
+      <button class="btn-secondary" (click)="cargarTransportistas()">
+        🔄 Recargar
+      </button>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>DNI</th>
+          <th>SOAT</th>
+          <th>REV. TEC</th>
+          <th>LICENCIA</th>
+          <th>TARJETA</th>
+          <th>Acción</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let t of transportistas">
+          <td>{{ t.nombre }} {{ t.apellidos }}</td>
+          <td>{{ t.dni }}</td>
+
+          <td>
+              <span class="status"
+                    [class.ok]="t.documentosMap?.SOAT"
+                    [class.bad]="!t.documentosMap?.SOAT">
+                {{ t.documentosMap?.SOAT ? '✔' : '✖' }}
+              </span>
+          </td>
+
+          <td>
+              <span class="status"
+                    [class.ok]="t.documentosMap?.REVISION_TECNICA"
+                    [class.bad]="!t.documentosMap?.REVISION_TECNICA">
+                {{ t.documentosMap?.REVISION_TECNICA ? '✔' : '✖' }}
+              </span>
+          </td>
+
+          <td>
+              <span class="status"
+                    [class.ok]="t.documentosMap?.LICENCIA"
+                    [class.bad]="!t.documentosMap?.LICENCIA">
+                {{ t.documentosMap?.LICENCIA ? '✔' : '✖' }}
+              </span>
+          </td>
+
+          <td>
+              <span class="status"
+                    [class.ok]="t.documentosMap?.TARJETA_CIRCULACION"
+                    [class.bad]="!t.documentosMap?.TARJETA_CIRCULACION">
+                {{ t.documentosMap?.TARJETA_CIRCULACION ? '✔' : '✖' }}
+              </span>
+          </td>
+
+          <td>
+            <button class="btn-primary"
+                    (click)="seleccionarTransportista(t.id)">
+              Editar
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 📝 FORMULARIO -->
+  <div class="card" *ngIf="selectedTransportistaId">
+
+    <div class="card-header">
+      <h3>Editar Documentos</h3>
+    </div>
+
+    <div class="form-grid">
+
+      <!-- Tipo -->
+      <div class="form-group">
+        <label>Tipo Documento</label>
+        <select [(ngModel)]="documento.tipoDocumento">
+          <option value="SOAT">SOAT</option>
+          <option value="REVISION_TECNICA">REVISION TECNICA</option>
+          <option value="LICENCIA">LICENCIA</option>
+          <option value="TARJETA_CIRCULACION">TARJETA</option>
+          <option value="DNI">DNI</option>
+        </select>
+      </div>
+
+      <!-- Campos con fechas -->
+      <ng-container *ngIf="esDocumentoConFechas()">
+        <div class="form-group">
+          <label>Código / Número</label>
+          <input [(ngModel)]="documento.valor">
+        </div>
+
+        <div class="form-group">
+          <label>Fecha Emisión</label>
+          <input type="date" [(ngModel)]="documento.fechaEmision">
+        </div>
+
+        <div class="form-group">
+          <label>Fecha Vencimiento</label>
+          <input type="date" [(ngModel)]="documento.fechaVencimiento">
+        </div>
+      </ng-container>
+
+      <!-- Campos simples -->
+      <ng-container *ngIf="!esDocumentoConFechas()">
+        <div class="form-group">
+          <label>Estado</label>
+          <select [(ngModel)]="documento.valor">
+            <option value="SI">SI</option>
+            <option value="NO">NO</option>
+          </select>
+        </div>
+      </ng-container>
+
+      <!-- Activo -->
+      <div class="form-group">
+        <label>Activo</label>
+        <select [(ngModel)]="documento.activo">
+          <option [ngValue]="true">Activo</option>
+          <option [ngValue]="false">Inactivo</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-primary" (click)="crearDocumento()">
+        Guardar Documento
+      </button>
+    </div>
+
+  </div>
+
+</div>

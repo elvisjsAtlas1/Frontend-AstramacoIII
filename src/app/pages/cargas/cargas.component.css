@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&family=Poppins:wght@600&display=swap');
+
+:root {
+  --primary: #0A1F44;
+  --secondary: #1E3A8A;
+  --accent: #3B82F6;
+  --bg: #F5F7FA;
+  --text: #0f172a;
+  --text-light: #6B7280;
+  --success: #10B981;
+  --error: #EF4444;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+h2 {
+  font-family: 'Poppins', sans-serif;
+  color: var(--primary);
+  margin: 0;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 13px;
+  color: var(--text-light);
+  margin-bottom: 5px;
+}
+
+input {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+}
+
+input:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+.table-container {
+  margin-top: 15px;
+  overflow-x: auto;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+thead {
+  background: linear-gradient(90deg, #0A1F44, #1E3A8A);
+}
+
+thead th {
+  color: #ffffff;
+  padding: 14px;
+  text-align: left;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  color: var(--text);
+  font-size: 14px;
+}
+
+tbody tr:hover {
+  background: #EEF2FF;
+}
+
+button {
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-secondary {
+  background: #9dafca;
+  color: #0A1F44;
+}
+
+.btn-secondary:hover {
+  background: #7f94b5;
+}
+
+.alert {
+  margin-top: 15px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.alert.success {
+  background: #ecfdf5;
+  color: #065f46;
+}
+
+.alert.error {
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.empty-box {
+  margin-top: 15px;
+  padding: 15px;
+  border-radius: 8px;
+  background: #f8fafc;
+  color: var(--text-light);
+  border: 1px dashed #cbd5e1;
+}

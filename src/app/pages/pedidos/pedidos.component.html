@@ -1,0 +1,157 @@
+<div class="container">
+
+  <!-- 🧾 FORMULARIO -->
+  <div class="card">
+
+    <div class="card-header">
+      <h2>Crear Pedido</h2>
+    </div>
+
+    <div class="form-grid">
+
+      <!-- Cliente -->
+      <div class="form-group">
+        <label>Nombre Cliente</label>
+        <input [(ngModel)]="pedido.clienteNombre">
+      </div>
+
+      <div class="form-group">
+        <label>Teléfono</label>
+        <input [(ngModel)]="pedido.clienteTelefono">
+      </div>
+
+      <div class="form-group">
+        <label>Dirección</label>
+        <input [(ngModel)]="pedido.direccionEnvio">
+      </div>
+
+      <!-- Tipo Transporte -->
+      <div class="form-group">
+        <label>Tipo Transporte</label>
+        <select [(ngModel)]="pedido.tipoTransporte"
+                (change)="actualizarMateriales(); cargarTransportistas()">
+          <option value="CAMIONERO">Camionero</option>
+          <option value="VOLQUETERO">Volquetero</option>
+        </select>
+      </div>
+
+      <!-- Transportista -->
+      <div class="form-group">
+        <label>Transportista</label>
+        <select [(ngModel)]="pedido.transportistaId">
+          <option *ngFor="let t of transportistas" [value]="t.id">
+            {{ t.nombre }} {{ t.apellidos }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Material -->
+      <div class="form-group">
+        <label>Material</label>
+        <select [(ngModel)]="pedido.material">
+          <option value="PANDERETA">Pandereta</option>
+          <option value="TECHO">Techo</option>
+          <option value="ARENA_GRUESA">Arena Gruesa</option>
+          <option value="ARENA_FINA">Arena Fina</option>
+          <option value="ARENA_ASENTAR">Arena Asentar</option>
+          <option value="PIEDRA">Piedra</option>
+          <option value="DESMONTE">Desmonte</option>
+        </select>
+      </div>
+
+      <!-- Datos -->
+      <div class="form-group">
+        <label>Cantidad</label>
+        <input type="number" [(ngModel)]="pedido.cantidad">
+      </div>
+
+      <div class="form-group">
+        <label>Monto Total</label>
+        <input type="number" [(ngModel)]="pedido.montoTotal">
+      </div>
+
+      <div class="form-group">
+        <label>Adelanto</label>
+        <input type="number" [(ngModel)]="pedido.adelanto">
+      </div>
+
+      <div class="form-group">
+        <label>Piso</label>
+        <input type="number" [(ngModel)]="pedido.piso">
+      </div>
+
+      <div class="form-group">
+        <label>Hora Envío</label>
+        <input type="datetime-local" [(ngModel)]="pedido.horaEnvio">
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-primary" (click)="crearPedido()">
+        Crear Pedido
+      </button>
+    </div>
+
+  </div>
+
+  <!-- 📊 LISTA -->
+  <div class="card">
+
+    <div class="card-header">
+      <h2>Lista de Pedidos</h2>
+      <button class="btn-secondary" (click)="cargarPedidos()">
+        🔄 Recargar
+      </button>
+    </div>
+
+    <div class="table-container">
+      <table>
+
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Cliente</th>
+          <th>Teléfono</th>
+          <th>Dirección</th>
+          <th>Material</th>
+          <th>Cantidad</th>
+          <th>Total</th>
+          <th>Adelanto</th>
+          <th>Piso</th>
+          <th>Hora</th>
+          <th>Transportista</th>
+          <th>Código</th>
+          <th>Estado</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let p of pedidos">
+
+          <td>{{ p.id }}</td>
+          <td>{{ p.clienteNombre }}</td>
+          <td>{{ p.clienteTelefono }}</td>
+          <td>{{ p.direccionEnvio }}</td>
+          <td>{{ p.material }}</td>
+          <td>{{ p.cantidad }}</td>
+          <td>{{ p.montoTotal }}</td>
+          <td>{{ p.adelanto }}</td>
+          <td>{{ p.piso }}</td>
+          <td>{{ p.horaEnvio }}</td>
+          <td>{{ p.transportistaNombre || 'Sin transportista' }}</td>
+          <td>{{ p.codigoVerificacion }}</td>
+
+          <td>
+            <span class="status ok">Activo</span>
+          </td>
+
+        </tr>
+        </tbody>
+
+      </table>
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,67 @@
+<div class="container">
+
+  <div class="card">
+    <div class="card-header">
+      <h2>Gestión de Cargas</h2>
+      <button class="btn-secondary" (click)="cargarCargas()">
+        🔄 Recargar
+      </button>
+    </div>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Buscar transportista por nombre</label>
+        <input
+          type="text"
+          [(ngModel)]="textoBusqueda"
+          (input)="filtrarCargas()"
+          placeholder="Ej. Juan Quispe">
+      </div>
+    </div>
+
+    <div *ngIf="mensaje" class="alert success">
+      {{ mensaje }}
+    </div>
+
+    <div *ngIf="error" class="alert error">
+      {{ error }}
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h2>Transportistas con carga registrada</h2>
+    </div>
+
+    <div class="table-container" *ngIf="cargasFiltradas.length > 0; else sinResultados">
+      <table>
+        <thead>
+        <tr>
+          <th>ID Carga</th>
+          <th>ID Transportista</th>
+          <th>Transportista</th>
+          <th>Material actual</th>
+          <th>Cantidad disponible</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let carga of cargasFiltradas">
+          <td>{{ carga.id }}</td>
+          <td>{{ carga.transportistaId }}</td>
+          <td>{{ carga.transportistaNombre }}</td>
+          <td>{{ carga.tipoMaterial }}</td>
+          <td>{{ carga.cantidadDisponible }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #sinResultados>
+      <div class="empty-box">
+        No se encontraron transportistas con carga registrada para la búsqueda actual.
+      </div>
+    </ng-template>
+  </div>
+
+</div>

@@ -1,0 +1,30 @@
+<div *ngIf="isLoggedIn(); else loginTemplate">
+
+  <!-- 🔵 TOPBAR -->
+  <div class="topbar">
+
+    <div class="logo">
+      <h2>Astramaco</h2>
+    </div>
+
+    <nav class="menu">
+      <a routerLink="/pedidos">📦 Pedidos</a>
+      <a routerLink="/transportistas">🚚 Transportistas</a>
+      <a routerLink="/documentos">📄 Documentos</a>
+      <a routerLink="/cargas">Cargas</a>
+    </nav>
+
+    <button class="logout" (click)="logout()">Cerrar sesión</button>
+
+  </div>
+
+  <!-- 🔵 CONTENIDO -->
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+
+</div>
+
+<ng-template #loginTemplate>
+  <router-outlet></router-outlet>
+</ng-template>

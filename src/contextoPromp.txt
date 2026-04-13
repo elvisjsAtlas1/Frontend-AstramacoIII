@@ -1,0 +1,2227 @@
+====================================================================================================
+EXPORTACIÓN DE CONTEXTO DE PROYECTO
+====================================================================================================
+Proyecto: D:/Proyecto astramaco iii/frontend-astramaco-iii/src
+Fecha: 2026-04-12 16:44:41
+Filtro por extensiones: Sí
+Extensiones seleccionadas: .css, .html, .java, .js, .json, .kt, .md, .py, .scss, .sql, .ts, .txt, .xml, .yaml, .yml
+
+----------------------------------------------------------------------------------------------------
+CARPETA: .
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src
+
+ARCHIVO: index.html
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\index.html
+CONTENIDO INICIO
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>FrontendAstramacoIii</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <app-root></app-root>
+</body>
+</html>
+
+CONTENIDO FIN
+
+ARCHIVO: main.ts
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\main.ts
+CONTENIDO INICIO
+import { bootstrapApplication } from '@angular/platform-browser';
+import { appConfig } from './app/app.config';
+import { App } from './app/app';
+
+bootstrapApplication(App, appConfig)
+  .catch((err) => console.error(err));
+
+CONTENIDO FIN
+
+ARCHIVO: styles.css
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\styles.css
+CONTENIDO INICIO
+/* You can add global styles to this file, and also import other style files */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+CONTENIDO FIN
+
+----------------------------------------------------------------------------------------------------
+CARPETA: app
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app
+
+ARCHIVO: app\app.config.ts
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\app.config.ts
+CONTENIDO INICIO
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import {jwtInterceptor} from './pages/login/jwt.interceptor';
+import {provideRouter} from '@angular/router';
+import {routes} from './app.routes';
+
+export const appConfig = {
+  providers: [
+    provideRouter(routes),
+    provideHttpClient(
+      withInterceptors([jwtInterceptor])
+    )
+  ]
+};
+
+CONTENIDO FIN
+
+ARCHIVO: app\app.css
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\app.css
+CONTENIDO INICIO
+/* RESET */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* 🔵 TOPBAR */
+.topbar {
+  height: 70px;
+  background: linear-gradient(90deg, #1E3A8A, #1E40AF);
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 30px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* LOGO */
+.logo h2 {
+  margin: 0;
+  font-weight: 600;
+}
+
+/* MENU */
+.menu {
+  display: flex;
+  gap: 25px;
+}
+
+.menu a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  transition: 0.3s;
+}
+
+/* EFECTO HOVER */
+.menu a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: white;
+  transition: 0.3s;
+}
+
+.menu a:hover::after {
+  width: 100%;
+}
+
+/* BOTÓN LOGOUT */
+.logout {
+  background: #DC2626;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.logout:hover {
+  background: #B91C1C;
+}
+
+/* CONTENIDO */
+.content {
+  padding: 30px;
+  background: #F1F5F9;
+  min-height: calc(100vh - 70px);
+}
+
+CONTENIDO FIN
+
+ARCHIVO: app\app.html
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\app.html
+CONTENIDO INICIO
+<div *ngIf="isLoggedIn(); else loginTemplate">
+
+  <!-- 🔵 TOPBAR -->
+  <div class="topbar">
+
+    <div class="logo">
+      <h2>Astramaco</h2>
+    </div>
+
+    <nav class="menu">
+      <a routerLink="/pedidos">📦 Pedidos</a>
+      <a routerLink="/transportistas">🚚 Transportistas</a>
+      <a routerLink="/documentos">📄 Documentos</a>
+    </nav>
+
+    <button class="logout" (click)="logout()">Cerrar sesión</button>
+
+  </div>
+
+  <!-- 🔵 CONTENIDO -->
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+
+</div>
+
+<ng-template #loginTemplate>
+  <router-outlet></router-outlet>
+</ng-template>
+
+CONTENIDO FIN
+
+ARCHIVO: app\app.routes.ts
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\app.routes.ts
+CONTENIDO INICIO
+import { Routes } from '@angular/router';
+import { PedidosComponent } from './pages/pedidos/pedidos.component';
+import { TransportistasComponent } from './pages/transportistas/transportistas.component';
+import { LoginComponent } from './pages/login/login.component';
+import {authGuard} from './config/authGuard';
+import {DocumentosComponent} from './pages/documentos/documentos.component';
+
+export const routes: Routes = [
+
+  { path: 'login', component: LoginComponent },
+
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+
+  { path: 'pedidos', component: PedidosComponent, canActivate: [authGuard] },
+  { path: 'transportistas', component: TransportistasComponent, canActivate: [authGuard] },
+  { path: 'documentos', component: DocumentosComponent },
+
+];
+
+CONTENIDO FIN
+
+ARCHIVO: app\app.spec.ts
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\app.spec.ts
+CONTENIDO INICIO
+import { TestBed } from '@angular/core/testing';
+import { App } from './app';
+
+describe('App', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [App],
+    }).compileComponents();
+  });
+
+  it('should create the app', () => {
+    const fixture = TestBed.createComponent(App);
+    const app = fixture.componentInstance;
+    expect(app).toBeTruthy();
+  });
+
+  it('should render title', async () => {
+    const fixture = TestBed.createComponent(App);
+    await fixture.whenStable();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, frontend-astramaco-iii');
+  });
+});
+
+CONTENIDO FIN
+
+ARCHIVO: app\app.ts
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\app.ts
+CONTENIDO INICIO
+import { Component } from '@angular/core';
+import {RouterOutlet, RouterLink, RouterModule} from '@angular/router';
+import {AuthService} from './service/auth.service';
+import {CommonModule} from '@angular/common';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet, RouterLink, RouterModule,CommonModule],
+  templateUrl: './app.html',
+  styleUrl: './app.css'
+})
+export class App {
+  constructor(private authService: AuthService) {}
+
+  isLoggedIn(): boolean {
+    return this.authService.estaLogueado();
+  }
+
+  logout() {
+    this.authService.logout();
+    location.href = '/login';
+  }
+
+  menuCerrado = false;
+
+  toggleMenu() {
+    this.menuCerrado = !this.menuCerrado;
+  }
+
+}
+
+CONTENIDO FIN
+
+----------------------------------------------------------------------------------------------------
+CARPETA: app\config
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\config
+
+ARCHIVO: app\config\authGuard.ts
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\config\authGuard.ts
+CONTENIDO INICIO
+import { CanActivateFn } from '@angular/router';
+
+export const authGuard: CanActivateFn = () => {
+
+  const token = localStorage.getItem('token');
+
+  if (token) return true;
+
+  window.location.href = '/login';
+  return false;
+};
+
+CONTENIDO FIN
+
+----------------------------------------------------------------------------------------------------
+CARPETA: app\models
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\models
+
+ARCHIVO: app\models\documento-personal.model.ts
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\models\documento-personal.model.ts
+CONTENIDO INICIO
+export interface DocumentoPersonal {
+  id: number;
+  tipoDocumento: string;
+  valor: string;
+  fechaEmision?: string;
+  fechaVencimiento?: string;
+  activo: boolean;
+}
+
+CONTENIDO FIN
+
+ARCHIVO: app\models\pedido.model.ts
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\models\pedido.model.ts
+CONTENIDO INICIO
+export interface Pedido {
+
+  id?: number;
+
+  clienteNombre: string;
+  clienteTelefono: string;
+  direccionEnvio: string;
+
+  tipoTransporte: 'CAMIONERO' | 'VOLQUETERO';
+
+  material:
+    | 'PANDERETA'
+    | 'TECHO'
+    | 'ARENA_GRUESA'
+    | 'ARENA_FINA'
+    | 'ARENA_ASENTAR'
+    | 'PIEDRA'
+    | 'DESMONTE';
+
+  cantidad: number;
+  montoTotal: number;
+  adelanto: number;
+
+  piso: number;
+
+  // 🔥 Angular usa string (ISO)
+  horaEnvio: string;
+
+  // 🔥 Para envío
+  transportistaId?: number;
+
+  // 🔥 Para respuesta del backend
+  transportista?: any;
+
+  codigoVerificacion?: string;
+
+  estado?: 'PENDIENTE' | 'EN_ENVIO' | 'EN_DESCARGA' | 'ENTREGADO' | 'CANCELADO';
+}
+
+CONTENIDO FIN
+
+ARCHIVO: app\models\transportista-con-docs.model.ts
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\models\transportista-con-docs.model.ts
+CONTENIDO INICIO
+import {Transportista} from './transportista.model';
+
+export interface TransportistaConDocs extends Transportista {
+  documentosMap: {
+    SOAT: boolean;
+    REVISION_TECNICA: boolean;
+    LICENCIA: boolean;
+    TARJETA_CIRCULACION: boolean;
+    DNI: boolean;
+  };
+}
+
+CONTENIDO FIN
+
+ARCHIVO: app\models\transportista.model.ts
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\models\transportista.model.ts
+CONTENIDO INICIO
+export interface Transportista {
+  id: number;
+  nombre: string;
+  apellidos: string;
+  dni: string;
+  edad: number;
+  tipoTransporte: 'CAMIONERO' | 'VOLQUETERO';
+  placa: string;
+  vehiculoInfo: string;
+  capacidad?: number;
+  estado?: 'ACTIVO' | 'INACTIVO';
+  usuarioId: number;
+}
+
+CONTENIDO FIN
+
+----------------------------------------------------------------------------------------------------
+CARPETA: app\pages
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\pages
+
+----------------------------------------------------------------------------------------------------
+CARPETA: app\pages\documentos
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\pages\documentos
+
+ARCHIVO: app\pages\documentos\documentos.component.css
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\pages\documentos\documentos.component.css
+CONTENIDO INICIO
+@import url('https://fonts.googleapis.com/css2?family=Inter&family=Poppins:wght@600&display=swap');
+
+:root {
+  --primary: #0A1F44;
+  --secondary: #1E3A8A;
+  --accent: #3B82F6;
+
+  --bg: #F5F7FA;
+  --text: #0d2fbd;
+  --text-light: #6B7280;
+
+  --success: #10B981;
+  --error: #EF4444;
+}
+
+/* General */
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  margin: 0;
+  padding: 20px;
+}
+
+/* Contenedor */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 🔵 HEADER DE TABLA */
+.table-container thead {
+  background: linear-gradient(90deg, #0A1F44, #1E3A8A);
+}
+
+.table-container thead th {
+  color: #ffffff !important;
+  padding: 14px;
+  font-weight: 600;
+  text-align: left;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+
+/* Cards */
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+}
+
+/* Header */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h2, h3 {
+  font-family: 'Poppins', sans-serif;
+  color: var(--primary);
+}
+
+.table-container {
+  margin-top: 15px;
+  overflow-x: auto;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.table-container tbody tr {
+  transition: background 0.25s ease;
+}
+
+.table-container tbody tr:hover {
+  background: #EEF2FF; /* 🔵 azul muy suave */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table-container tbody tr td {
+  transition: background 0.25s ease, color 0.2s;
+}
+
+.table-container tbody tr:hover td {
+  background: #E0E7FF; /* 🔥 un poco más fuerte */
+  color: #0A1F44; /* azul oscuro elegante */
+}
+
+th {
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  color: #ffffff;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  font-size: 14px;
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  color: var(--text);
+  font-size: 14px;
+}
+tr:hover {
+  background: #161e8a; /* azul suave */
+  transition: 0.2s;
+}
+/* Estados */
+.status {
+  font-weight: bold;
+}
+
+.status.ok {
+  color: var(--success);
+}
+
+.status.bad {
+  color: var(--error);
+}
+
+/* Botones */
+button {
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #4c8cf3;
+  border: 2px solid #374151; /* 🔥 BORDE COMPLETO */
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background: #1d3c9e; /* azul más oscuro */
+  border-color: #1d3fa3;
+}
+
+.btn-secondary {
+  background: #9dafca;
+}
+
+/* Formulario */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 13px;
+  color: var(--text-light);
+  margin-bottom: 5px;
+}
+
+input, select {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+input:focus, select:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+/* Acciones */
+.form-actions {
+  margin-top: 20px;
+  text-align: right;
+}
+
+CONTENIDO FIN
+
+ARCHIVO: app\pages\documentos\documentos.component.html
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\pages\documentos\documentos.component.html
+CONTENIDO INICIO
+<div class="container">
+
+  <!-- 📊 LISTADO -->
+  <div class="card">
+    <div class="card-header">
+      <h2>Control de Documentos</h2>
+      <button class="btn-secondary" (click)="cargarTransportistas()">
+        🔄 Recargar
+      </button>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>DNI</th>
+          <th>SOAT</th>
+          <th>REV. TEC</th>
+          <th>LICENCIA</th>
+          <th>TARJETA</th>
+          <th>Acción</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let t of transportistas">
+          <td>{{ t.nombre }} {{ t.apellidos }}</td>
+          <td>{{ t.dni }}</td>
+
+          <td>
+              <span class="status"
+                    [class.ok]="t.documentosMap?.SOAT"
+                    [class.bad]="!t.documentosMap?.SOAT">
+                {{ t.documentosMap?.SOAT ? '✔' : '✖' }}
+              </span>
+          </td>
+
+          <td>
+              <span class="status"
+                    [class.ok]="t.documentosMap?.REVISION_TECNICA"
+                    [class.bad]="!t.documentosMap?.REVISION_TECNICA">
+                {{ t.documentosMap?.REVISION_TECNICA ? '✔' : '✖' }}
+              </span>
+          </td>
+
+          <td>
+              <span class="status"
+                    [class.ok]="t.documentosMap?.LICENCIA"
+                    [class.bad]="!t.documentosMap?.LICENCIA">
+                {{ t.documentosMap?.LICENCIA ? '✔' : '✖' }}
+              </span>
+          </td>
+
+          <td>
+              <span class="status"
+                    [class.ok]="t.documentosMap?.TARJETA_CIRCULACION"
+                    [class.bad]="!t.documentosMap?.TARJETA_CIRCULACION">
+                {{ t.documentosMap?.TARJETA_CIRCULACION ? '✔' : '✖' }}
+              </span>
+          </td>
+
+          <td>
+            <button class="btn-primary"
+                    (click)="seleccionarTransportista(t.id)">
+              Editar
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 📝 FORMULARIO -->
+  <div class="card" *ngIf="selectedTransportistaId">
+
+    <div class="card-header">
+      <h3>Editar Documentos</h3>
+    </div>
+
+    <div class="form-grid">
+
+      <!-- Tipo -->
+      <div class="form-group">
+        <label>Tipo Documento</label>
+        <select [(ngModel)]="documento.tipoDocumento">
+          <option value="SOAT">SOAT</option>
+          <option value="REVISION_TECNICA">REVISION TECNICA</option>
+          <option value="LICENCIA">LICENCIA</option>
+          <option value="TARJETA_CIRCULACION">TARJETA</option>
+          <option value="DNI">DNI</option>
+        </select>
+      </div>
+
+      <!-- Campos con fechas -->
+      <ng-container *ngIf="esDocumentoConFechas()">
+        <div class="form-group">
+          <label>Código / Número</label>
+          <input [(ngModel)]="documento.valor">
+        </div>
+
+        <div class="form-group">
+          <label>Fecha Emisión</label>
+          <input type="date" [(ngModel)]="documento.fechaEmision">
+        </div>
+
+        <div class="form-group">
+          <label>Fecha Vencimiento</label>
+          <input type="date" [(ngModel)]="documento.fechaVencimiento">
+        </div>
+      </ng-container>
+
+      <!-- Campos simples -->
+      <ng-container *ngIf="!esDocumentoConFechas()">
+        <div class="form-group">
+          <label>Estado</label>
+          <select [(ngModel)]="documento.valor">
+            <option value="SI">SI</option>
+            <option value="NO">NO</option>
+          </select>
+        </div>
+      </ng-container>
+
+      <!-- Activo -->
+      <div class="form-group">
+        <label>Activo</label>
+        <select [(ngModel)]="documento.activo">
+          <option [ngValue]="true">Activo</option>
+          <option [ngValue]="false">Inactivo</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-primary" (click)="crearDocumento()">
+        Guardar Documento
+      </button>
+    </div>
+
+  </div>
+
+</div>
+
+CONTENIDO FIN
+
+ARCHIVO: app\pages\documentos\documentos.component.ts
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\pages\documentos\documentos.component.ts
+CONTENIDO INICIO
+import {Component} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {TransportistaService} from '../../service/transportista.service';
+import {DocumentoService} from '../../service/documento.service';
+import {NgForOf, NgIf} from '@angular/common';
+import {DocumentoPersonal} from '../../models/documento-personal.model';
+import {Transportista} from '../../models/transportista.model';
+import {TransportistaConDocs} from '../../models/transportista-con-docs.model';
+
+
+@Component({
+  selector: 'app-documentos',
+  standalone: true,
+  imports: [FormsModule, NgForOf, NgIf],
+  templateUrl: './documentos.component.html',
+  styleUrl: './documentos.component.css'
+})
+export class DocumentosComponent {
+
+  transportistas: TransportistaConDocs[] = [];
+  documentos: DocumentoPersonal[] = [];
+
+  selectedTransportistaId: number | null = null;
+
+  documento = {
+    tipoDocumento: 'SOAT',
+    valor: '',
+    fechaEmision: '',
+    fechaVencimiento: '',
+    activo: true
+  };
+
+  constructor(
+    private transportistaService: TransportistaService,
+    private documentoService: DocumentoService
+  ) {}
+
+
+  mapearDocumentosPorTipo(docs: DocumentoPersonal[]) {
+    const map = {
+      SOAT: false,
+      REVISION_TECNICA: false,
+      LICENCIA: false,
+      TARJETA_CIRCULACION: false,
+      DNI: false
+    };
+
+    docs.forEach(doc => {
+      if (doc.activo) {
+        map[doc.tipoDocumento as keyof typeof map] = true;
+      }
+    });
+
+    return map;
+  }
+
+  cargarTransportistas() {
+    this.transportistaService.listar().subscribe((data) => {
+
+      this.transportistas = [];
+
+      data.forEach(t => {
+        this.documentoService.listar(t.id!).subscribe((docs) => {
+
+          const transportistaConDocs: TransportistaConDocs = {
+            ...t,
+            documentosMap: this.mapearDocumentosPorTipo(docs)
+          };
+
+          this.transportistas.push(transportistaConDocs);
+
+        });
+      });
+
+    });
+  }
+
+  seleccionarTransportista(id: number) {
+    this.selectedTransportistaId = id;
+    this.cargarDocumentos();
+  }
+
+  cargarDocumentos() {
+    if (!this.selectedTransportistaId) return;
+
+    this.documentoService.listar(this.selectedTransportistaId)
+      .subscribe((data: any) => this.documentos = data);
+  }
+
+  esDocumentoConFechas(): boolean {
+    return this.documento.tipoDocumento === 'SOAT' ||
+      this.documento.tipoDocumento === 'REVISION_TECNICA';
+  }
+
+  crearDocumento() {
+    if (!this.selectedTransportistaId) {
+      alert('Seleccione un transportista');
+      return;
+    }
+
+    this.documentoService
+      .crear(this.selectedTransportistaId, this.documento)
+      .subscribe(() => {
+
+        alert('Documento agregado');
+
+        // 🔥 refresca lista de documentos del panel
+        this.cargarDocumentos();
+
+        // 🔥 refresca tabla principal (SOAT, LICENCIA, etc.)
+        this.cargarTransportistas();
+
+        // 🔥 limpia formulario (opcional pero pro)
+        this.documento = {
+          tipoDocumento: 'SOAT',
+          valor: '',
+          fechaEmision: '',
+          fechaVencimiento: '',
+          activo: true
+        };
+      });
+  }
+
+
+
+}
+
+CONTENIDO FIN
+
+----------------------------------------------------------------------------------------------------
+CARPETA: app\pages\login
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\pages\login
+
+ARCHIVO: app\pages\login\jwt.interceptor.ts
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\pages\login\jwt.interceptor.ts
+CONTENIDO INICIO
+import { HttpInterceptorFn } from '@angular/common/http';
+
+export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
+
+  const token = localStorage.getItem('token');
+
+  if (token) {
+    const cloned = req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return next(cloned);
+  }
+
+  return next(req);
+};
+
+CONTENIDO FIN
+
+ARCHIVO: app\pages\login\login.component.css
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\pages\login\login.component.css
+CONTENIDO INICIO
+/* 🔥 CONTENEDOR PRINCIPAL */
+.login-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #0A1F44, #1E3A8A);
+  font-family: 'Inter', sans-serif;
+}
+
+/* 💳 TARJETA */
+.login-card {
+  background: #ffffff;
+  padding: 40px;
+  width: 350px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  text-align: center;
+  animation: fadeIn 0.6s ease;
+}
+
+/* 🧾 TITULO */
+.login-card h2 {
+  margin-bottom: 5px;
+  color: #0A1F44;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* SUBTITULO */
+.subtitle {
+  margin-bottom: 25px;
+  color: #6B7280;
+  font-size: 14px;
+}
+
+/* 📦 FORM GROUP */
+.form-group {
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+/* LABEL */
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 13px;
+  color: #374151;
+}
+
+/* INPUT */
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #D1D5DB;
+  border-radius: 6px;
+  outline: none;
+  transition: 0.3s;
+  font-size: 14px;
+}
+
+/* EFECTO FOCUS */
+.form-group input:focus {
+  border-color: #3B82F6;
+  box-shadow: 0 0 5px rgba(59,130,246,0.3);
+}
+
+/* 🔵 BOTON */
+button {
+  width: 100%;
+  padding: 12px;
+  background: #3B82F6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* HOVER */
+button:hover {
+  background: #1E3A8A;
+}
+
+/* ✨ ANIMACION */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* CONTENEDOR DEL INPUT + ICONO */
+.input-icon {
+  position: relative;
+}
+
+/* ICONO */
+.input-icon i {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  color: #6B7280;
+  font-size: 14px;
+}
+
+/* INPUT CON ESPACIO PARA ICONO */
+.input-icon input {
+  width: 100%;
+  padding: 10px 10px 10px 35px;
+  border: 1px solid #D1D5DB;
+  border-radius: 6px;
+  outline: none;
+  font-size: 14px;
+
+  box-sizing: border-box; /* 🔥 CLAVE */
+}
+/* EFECTO FOCUS */
+.input-icon input:focus {
+  border-color: #3B82F6;
+  box-shadow: 0 0 5px rgba(59,130,246,0.3);
+}
+
+/* ICONO ACTIVO */
+.input-icon input:focus + i,
+.input-icon input:focus ~ i {
+  color: #3B82F6;
+}
+
+
+/* 🔥 CONTENEDOR PRINCIPAL */
+.login-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;   /* horizontal */
+  align-items: center;       /* vertical */
+  background: linear-gradient(135deg, #0F172A, #1E3A8A);
+}
+
+/* 🎴 TARJETA LOGIN */
+.login-card {
+  background: #FFFFFF;
+  padding: 40px;
+  width: 320px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+/* TITULO */
+.login-card h2 {
+  margin-bottom: 20px;
+  font-family: 'Poppins', sans-serif;
+  color: #1E3A8A;
+}
+
+/* FORM */
+.form-group {
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+label {
+  font-size: 13px;
+  color: #374151;
+}
+
+/* BOTON */
+button {
+  width: 100%;
+  padding: 10px;
+  background: #1E3A8A;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #3B82F6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+CONTENIDO FIN
+
+ARCHIVO: app\pages\login\login.component.html
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\pages\login\login.component.html
+CONTENIDO INICIO
+<header>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+</header>
+<div class="login-container">
+
+  <div class="login-card">
+
+    <h2>Iniciar Sesión</h2>
+
+    <div class="form-group">
+      <label>Usuario</label>
+      <div class="input-icon">
+        <i class="fa fa-user"></i>
+        <input [(ngModel)]="username" placeholder="Ingrese su usuario">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Contraseña</label>
+      <div class="input-icon">
+        <i class="fa fa-lock"></i>
+        <input [(ngModel)]="password" type="password" placeholder="Ingrese su contraseña">
+      </div>
+    </div>
+
+    <button (click)="login()">Ingresar</button>
+
+  </div>
+
+</div>
+
+CONTENIDO FIN
+
+ARCHIVO: app\pages\login\login.component.ts
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\pages\login\login.component.ts
+CONTENIDO INICIO
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+import { Router } from '@angular/router';
+import {AuthService} from '../../service/auth.service';
+
+
+@Component({
+  standalone: true,
+  imports: [FormsModule],
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
+})
+export class LoginComponent {
+
+  username = '';
+  password = '';
+
+  constructor(private auth: AuthService, private router: Router) {}
+
+  login() {
+    const data = {
+      username: this.username,
+      password: this.password
+    };
+
+    this.auth.login(data).subscribe((res: any) => {
+
+      this.auth.guardarToken(res.token);
+
+      this.router.navigate(['/transportistas']);
+
+    });
+  }
+}
+
+CONTENIDO FIN
+
+----------------------------------------------------------------------------------------------------
+CARPETA: app\pages\pedidos
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\pages\pedidos
+
+ARCHIVO: app\pages\pedidos\pedidos.component.css
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\pages\pedidos\pedidos.component.css
+CONTENIDO INICIO
+@import url('https://fonts.googleapis.com/css2?family=Inter&family=Poppins:wght@600&display=swap');
+
+:root {
+  --primary: #0A1F44;
+  --secondary: #1E3A8A;
+  --accent: #3B82F6;
+
+  --bg: #F5F7FA;
+  --text: #0d2fbd;
+  --text-light: #6B7280;
+
+  --success: #10B981;
+  --error: #EF4444;
+}
+
+/* General */
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  margin: 0;
+  padding: 20px;
+}
+
+/* Contenedor */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 🔵 HEADER DE TABLA */
+.table-container thead {
+  background: linear-gradient(90deg, #0A1F44, #1E3A8A);
+}
+
+.table-container thead th {
+  color: #ffffff !important;
+  padding: 14px;
+  font-weight: 600;
+  text-align: left;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+
+/* Cards */
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+}
+
+/* Header */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h2, h3 {
+  font-family: 'Poppins', sans-serif;
+  color: var(--primary);
+}
+
+.table-container {
+  margin-top: 15px;
+  overflow-x: auto;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.table-container tbody tr {
+  transition: background 0.25s ease;
+}
+
+.table-container tbody tr:hover {
+  background: #EEF2FF; /* 🔵 azul muy suave */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table-container tbody tr td {
+  transition: background 0.25s ease, color 0.2s;
+}
+
+.table-container tbody tr:hover td {
+  background: #E0E7FF; /* 🔥 un poco más fuerte */
+  color: #0A1F44; /* azul oscuro elegante */
+}
+
+th {
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  color: #ffffff;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  font-size: 14px;
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  color: var(--text);
+  font-size: 14px;
+}
+tr:hover {
+  background: #161e8a; /* azul suave */
+  transition: 0.2s;
+}
+/* Estados */
+.status {
+  font-weight: bold;
+}
+
+.status.ok {
+  color: var(--success);
+}
+
+.status.bad {
+  color: var(--error);
+}
+
+/* Botones */
+button {
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #4c8cf3;
+  border: 2px solid #374151; /* 🔥 BORDE COMPLETO */
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background: #1d3c9e; /* azul más oscuro */
+  border-color: #1d3fa3;
+}
+
+.btn-secondary {
+  background: #9dafca;
+}
+
+/* Formulario */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 13px;
+  color: var(--text-light);
+  margin-bottom: 5px;
+}
+
+input, select {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+input:focus, select:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+/* Acciones */
+.form-actions {
+  margin-top: 20px;
+  text-align: right;
+}
+
+CONTENIDO FIN
+
+ARCHIVO: app\pages\pedidos\pedidos.component.html
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\pages\pedidos\pedidos.component.html
+CONTENIDO INICIO
+<div class="container">
+
+  <!-- 🧾 FORMULARIO -->
+  <div class="card">
+
+    <div class="card-header">
+      <h2>Crear Pedido</h2>
+    </div>
+
+    <div class="form-grid">
+
+      <!-- Cliente -->
+      <div class="form-group">
+        <label>Nombre Cliente</label>
+        <input [(ngModel)]="pedido.clienteNombre">
+      </div>
+
+      <div class="form-group">
+        <label>Teléfono</label>
+        <input [(ngModel)]="pedido.clienteTelefono">
+      </div>
+
+      <div class="form-group">
+        <label>Dirección</label>
+        <input [(ngModel)]="pedido.direccionEnvio">
+      </div>
+
+      <!-- Tipo Transporte -->
+      <div class="form-group">
+        <label>Tipo Transporte</label>
+        <select [(ngModel)]="pedido.tipoTransporte"
+                (change)="actualizarMateriales(); cargarTransportistas()">
+          <option value="CAMIONERO">Camionero</option>
+          <option value="VOLQUETERO">Volquetero</option>
+        </select>
+      </div>
+
+      <!-- Transportista -->
+      <div class="form-group">
+        <label>Transportista</label>
+        <select [(ngModel)]="pedido.transportistaId">
+          <option *ngFor="let t of transportistas" [value]="t.id">
+            {{ t.nombre }} {{ t.apellidos }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Material -->
+      <div class="form-group">
+        <label>Material</label>
+        <select [(ngModel)]="pedido.material">
+          <option value="PANDERETA">Pandereta</option>
+          <option value="TECHO">Techo</option>
+          <option value="ARENA_GRUESA">Arena Gruesa</option>
+          <option value="ARENA_FINA">Arena Fina</option>
+          <option value="ARENA_ASENTAR">Arena Asentar</option>
+          <option value="PIEDRA">Piedra</option>
+          <option value="DESMONTE">Desmonte</option>
+        </select>
+      </div>
+
+      <!-- Datos -->
+      <div class="form-group">
+        <label>Cantidad</label>
+        <input type="number" [(ngModel)]="pedido.cantidad">
+      </div>
+
+      <div class="form-group">
+        <label>Monto Total</label>
+        <input type="number" [(ngModel)]="pedido.montoTotal">
+      </div>
+
+      <div class="form-group">
+        <label>Adelanto</label>
+        <input type="number" [(ngModel)]="pedido.adelanto">
+      </div>
+
+      <div class="form-group">
+        <label>Piso</label>
+        <input type="number" [(ngModel)]="pedido.piso">
+      </div>
+
+      <div class="form-group">
+        <label>Hora Envío</label>
+        <input type="datetime-local" [(ngModel)]="pedido.horaEnvio">
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-primary" (click)="crearPedido()">
+        Crear Pedido
+      </button>
+    </div>
+
+  </div>
+
+  <!-- 📊 LISTA -->
+  <div class="card">
+
+    <div class="card-header">
+      <h2>Lista de Pedidos</h2>
+      <button class="btn-secondary" (click)="cargarPedidos()">
+        🔄 Recargar
+      </button>
+    </div>
+
+    <div class="table-container">
+      <table>
+
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Cliente</th>
+          <th>Teléfono</th>
+          <th>Dirección</th>
+          <th>Material</th>
+          <th>Cantidad</th>
+          <th>Total</th>
+          <th>Adelanto</th>
+          <th>Piso</th>
+          <th>Hora</th>
+          <th>Transportista</th>
+          <th>Código</th>
+          <th>Estado</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let p of pedidos">
+
+          <td>{{ p.id }}</td>
+          <td>{{ p.clienteNombre }}</td>
+          <td>{{ p.clienteTelefono }}</td>
+          <td>{{ p.direccionEnvio }}</td>
+          <td>{{ p.material }}</td>
+          <td>{{ p.cantidad }}</td>
+          <td>{{ p.montoTotal }}</td>
+          <td>{{ p.adelanto }}</td>
+          <td>{{ p.piso }}</td>
+          <td>{{ p.horaEnvio }}</td>
+          <td>{{ p.transportistaId }}</td>
+          <td>{{ p.codigoVerificacion }}</td>
+
+          <td>
+            <span class="status ok">Activo</span>
+          </td>
+
+        </tr>
+        </tbody>
+
+      </table>
+    </div>
+
+  </div>
+
+</div>
+
+CONTENIDO FIN
+
+ARCHIVO: app\pages\pedidos\pedidos.component.ts
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\pages\pedidos\pedidos.component.ts
+CONTENIDO INICIO
+import {PedidoService} from '../../service/pedido.service';
+import {TransportistaService} from '../../service/transportista.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import {Component} from '@angular/core';
+import {NgForOf} from '@angular/common';
+import { OnInit } from '@angular/core';
+@Component({
+  selector: 'app-pedidos',
+  standalone: true,
+  imports: [FormsModule, NgForOf, CommonModule],
+  templateUrl: './pedidos.component.html',
+  styleUrl: './pedidos.component.css',
+})
+export class PedidosComponent {
+
+  pedido = {
+    clienteNombre: '',
+    clienteTelefono: '',
+    direccionEnvio: '',
+    tipoTransporte: 'CAMIONERO',
+    material: '',
+    cantidad: 0,
+    montoTotal: 0,
+    adelanto: 0,
+    piso: 1,
+    horaEnvio: '',
+    transportistaId: 0
+  };
+
+  transportistas: any[] = [];
+
+  constructor(
+    private pedidoService: PedidoService,
+    private transportistaService: TransportistaService
+  ) {}
+
+  cargarTransportistas() {
+    this.transportistaService
+      .listarPorTipo(this.pedido.tipoTransporte)
+      .subscribe((data: any) => this.transportistas = data);
+  }
+
+  crearPedido() {
+
+    // 🔥 Asegurar formato correcto (opcional pero pro)
+    if (this.pedido.horaEnvio && this.pedido.horaEnvio.length === 16) {
+      this.pedido.horaEnvio += ':00';
+    }
+
+    this.pedidoService.crear(this.pedido)
+      .subscribe(() => alert('Pedido creado'));
+  }
+
+  materiales: string[] = [];
+
+  actualizarMateriales() {
+    if (this.pedido.tipoTransporte === 'CAMIONERO') {
+      this.materiales = ['PANDERETA', 'TECHO'];
+    } else {
+      this.materiales = [
+        'ARENA_GRUESA',
+        'ARENA_FINA',
+        'ARENA_ASENTAR',
+        'PIEDRA',
+        'DESMONTE'
+      ];
+    }
+  }
+  pedidos: any[] = [];
+
+
+
+  cargarPedidos() {
+    this.pedidoService.listar()
+      .subscribe((data: any) => this.pedidos = data);
+  }
+
+}
+
+CONTENIDO FIN
+
+----------------------------------------------------------------------------------------------------
+CARPETA: app\pages\transportistas
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\pages\transportistas
+
+ARCHIVO: app\pages\transportistas\transportistas.component.css
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\pages\transportistas\transportistas.component.css
+CONTENIDO INICIO
+@import url('https://fonts.googleapis.com/css2?family=Inter&family=Poppins:wght@600&display=swap');
+
+:root {
+  --primary: #0A1F44;
+  --secondary: #1E3A8A;
+  --accent: #3B82F6;
+
+  --bg: #F5F7FA;
+  --text: #0d2fbd;
+  --text-light: #6B7280;
+
+  --success: #10B981;
+  --error: #EF4444;
+}
+
+/* General */
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  margin: 0;
+  padding: 20px;
+}
+
+/* Contenedor */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 🔵 HEADER DE TABLA */
+.table-container thead {
+  background: linear-gradient(90deg, #0A1F44, #1E3A8A);
+}
+
+.table-container thead th {
+  color: #ffffff !important;
+  padding: 14px;
+  font-weight: 600;
+  text-align: left;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+
+/* Cards */
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+}
+
+/* Header */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h2, h3 {
+  font-family: 'Poppins', sans-serif;
+  color: var(--primary);
+}
+
+.table-container {
+  margin-top: 15px;
+  overflow-x: auto;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.table-container tbody tr {
+  transition: background 0.25s ease;
+}
+
+.table-container tbody tr:hover {
+  background: #EEF2FF; /* 🔵 azul muy suave */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table-container tbody tr td {
+  transition: background 0.25s ease, color 0.2s;
+}
+
+.table-container tbody tr:hover td {
+  background: #E0E7FF; /* 🔥 un poco más fuerte */
+  color: #0A1F44; /* azul oscuro elegante */
+}
+
+th {
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  color: #ffffff;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  font-size: 14px;
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  color: var(--text);
+  font-size: 14px;
+}
+tr:hover {
+  background: #161e8a; /* azul suave */
+  transition: 0.2s;
+}
+/* Estados */
+.status {
+  font-weight: bold;
+}
+
+.status.ok {
+  color: var(--success);
+}
+
+.status.bad {
+  color: var(--error);
+}
+
+/* Botones */
+button {
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #4c8cf3;
+  border: 2px solid #374151; /* 🔥 BORDE COMPLETO */
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background: #1d3c9e; /* azul más oscuro */
+  border-color: #1d3fa3;
+}
+
+.btn-secondary {
+  background: #9dafca;
+}
+
+/* Formulario */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 13px;
+  color: var(--text-light);
+  margin-bottom: 5px;
+}
+
+input, select {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+input:focus, select:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+/* Acciones */
+.form-actions {
+  margin-top: 20px;
+  text-align: right;
+}
+
+CONTENIDO FIN
+
+ARCHIVO: app\pages\transportistas\transportistas.component.html
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\pages\transportistas\transportistas.component.html
+CONTENIDO INICIO
+<div class="container">
+
+  <!-- 🧾 FORMULARIO -->
+  <div class="card">
+
+    <div class="card-header">
+      <h2>Crear Transportista</h2>
+    </div>
+
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label>Nombre</label>
+        <input [(ngModel)]="transportista.nombre">
+      </div>
+
+      <div class="form-group">
+        <label>Apellidos</label>
+        <input [(ngModel)]="transportista.apellidos">
+      </div>
+
+      <div class="form-group">
+        <label>DNI</label>
+        <input [(ngModel)]="transportista.dni">
+      </div>
+
+      <div class="form-group">
+        <label>Edad</label>
+        <input type="number" [(ngModel)]="transportista.edad">
+      </div>
+
+      <div class="form-group">
+        <label>Tipo Transporte</label>
+        <select [(ngModel)]="transportista.tipoTransporte">
+          <option value="CAMIONERO">Camionero</option>
+          <option value="VOLQUETERO">Volquetero</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Placa</label>
+        <input [(ngModel)]="transportista.placa">
+      </div>
+
+      <div class="form-group">
+        <label>Vehículo</label>
+        <input [(ngModel)]="transportista.vehiculoInfo">
+      </div>
+
+      <div class="form-group">
+        <label>Capacidad</label>
+        <input type="number" [(ngModel)]="transportista.capacidad">
+      </div>
+
+      <div class="form-group">
+        <label>Estado</label>
+        <select [(ngModel)]="transportista.estado">
+          <option value="ACTIVO">Activo</option>
+          <option value="INACTIVO">Inactivo</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-primary" (click)="crear()">
+        Crear Transportista
+      </button>
+    </div>
+
+  </div>
+
+  <!-- 📋 TABLA -->
+  <div class="card">
+
+    <div class="card-header">
+      <h2>Lista de Transportistas</h2>
+      <button class="btn-secondary" (click)="cargar()">
+        🔄 Recargar
+      </button>
+    </div>
+
+    <div class="table-container">
+      <table>
+
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>DNI</th>
+          <th>Edad</th>
+          <th>Tipo</th>
+          <th>Placa</th>
+          <th>Vehículo</th>
+          <th>Capacidad</th>
+          <th>Estado</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let t of transportistas">
+          <td>{{ t.id }}</td>
+          <td>{{ t.nombre }} {{ t.apellidos }}</td>
+          <td>{{ t.dni }}</td>
+          <td>{{ t.edad }}</td>
+          <td>{{ t.tipoTransporte }}</td>
+          <td>{{ t.placa }}</td>
+          <td>{{ t.vehiculoInfo }}</td>
+          <td>{{ t.capacidad }}</td>
+
+          <td>
+            <span class="status"
+                  [class.ok]="t.estado === 'ACTIVO'"
+                  [class.bad]="t.estado === 'INACTIVO'">
+              {{ t.estado }}
+            </span>
+          </td>
+        </tr>
+        </tbody>
+
+      </table>
+    </div>
+
+  </div>
+
+</div>
+
+CONTENIDO FIN
+
+ARCHIVO: app\pages\transportistas\transportistas.component.ts
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\pages\transportistas\transportistas.component.ts
+CONTENIDO INICIO
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import {TransportistaService} from '../../service/transportista.service';
+import {DocumentoService} from '../../service/documento.service';
+
+@Component({
+  selector: 'app-transportistas',
+  standalone: true,
+  imports: [FormsModule, CommonModule],
+  templateUrl: './transportistas.component.html',
+  styleUrl: './transportistas.component.css'
+})
+export class TransportistasComponent {
+
+  // 🔵 TRANSPORTISTA (QUITAMOS usuarioId)
+  transportista = {
+    nombre: '',
+    apellidos: '',
+    dni: '',
+    edad: 0,
+    tipoTransporte: 'CAMIONERO',
+    placa: '',
+    vehiculoInfo: '',
+    capacidad: 0,
+    estado: 'ACTIVO'
+  };
+
+  // 🔵 LISTA
+  transportistas: any[] = [];
+
+  // 🔥 DOCUMENTOS
+  selectedTransportistaId: number | null = null;
+
+  documento = {
+    tipoDocumento: 'SOAT',
+    valor: '',
+    fechaEmision: '',
+    fechaVencimiento: ''
+  };
+
+  documentos: any[] = [];
+
+  constructor(
+    private service: TransportistaService,
+    private documentoService: DocumentoService
+  ) {}
+
+  // 🔥 CREAR TRANSPORTISTA
+  crear() {
+    this.service.crear(this.transportista)
+      .subscribe(() => {
+        alert('Transportista creado');
+        this.cargar(); // recarga lista
+      });
+  }
+
+  // 🔥 CARGAR TRANSPORTISTAS
+  ngOnInit() {
+    this.cargar();
+  }
+
+  cargar() {
+    this.service.listar()
+      .subscribe((data: any) => this.transportistas = data);
+  }
+
+  // 🔥 SELECCIONAR TRANSPORTISTA
+  seleccionarTransportista(id: number) {
+    this.selectedTransportistaId = id;
+    this.cargarDocumentos();
+  }
+
+  // 🔥 CREAR DOCUMENTO
+  crearDocumento() {
+    if (!this.selectedTransportistaId) {
+      alert('Seleccione un transportista');
+      return;
+    }
+
+    this.documentoService.crear(this.selectedTransportistaId, this.documento)
+      .subscribe(() => {
+        alert('Documento agregado');
+        this.cargarDocumentos();
+      });
+  }
+
+  // 🔥 LISTAR DOCUMENTOS
+  cargarDocumentos() {
+    if (!this.selectedTransportistaId) return;
+
+    this.documentoService.listar(this.selectedTransportistaId)
+      .subscribe((data: any) => this.documentos = data);
+  }
+}
+
+CONTENIDO FIN
+
+----------------------------------------------------------------------------------------------------
+CARPETA: app\service
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\service
+
+ARCHIVO: app\service\auth.service.ts
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\service\auth.service.ts
+CONTENIDO INICIO
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+
+@Injectable({ providedIn: 'root' })
+export class AuthService {
+
+  private api = `${environment.apiUrl}/auth`;
+
+  constructor(private http: HttpClient) {}
+
+  // 🔐 LOGIN
+  login(data: any) {
+    return this.http.post<any>(`${this.api}/login`, data);
+  }
+
+  // 💾 GUARDAR TOKEN
+  guardarToken(token: string) {
+    localStorage.setItem('token', token);
+  }
+
+  // 📥 OBTENER TOKEN
+  obtenerToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
+  // ✅ VALIDAR SI ESTÁ LOGUEADO
+  estaLogueado(): boolean {
+    return !!this.obtenerToken();
+  }
+
+  // 🚪 LOGOUT
+  logout() {
+    localStorage.removeItem('token');
+  }
+}
+
+CONTENIDO FIN
+
+ARCHIVO: app\service\documento.service.ts
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\service\documento.service.ts
+CONTENIDO INICIO
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+import {DocumentoPersonal} from '../models/documento-personal.model';
+
+@Injectable({ providedIn: 'root' })
+export class DocumentoService {
+
+  private api = `${environment.apiUrl}/documentos`;
+
+  constructor(private http: HttpClient) {}
+
+  // 🔥 CREAR DOCUMENTO
+  crear(transportistaId: number, doc: any) {
+    return this.http.post(`${this.api}/${transportistaId}`, doc);
+  }
+
+  // 📋 LISTAR DOCUMENTOS POR TRANSPORTISTA
+  listar(transportistaId: number) {
+    return this.http.get<DocumentoPersonal[]>(
+      `${this.api}/transportista/${transportistaId}`
+    );
+  }
+}
+
+CONTENIDO FIN
+
+ARCHIVO: app\service\pedido.service.ts
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\service\pedido.service.ts
+CONTENIDO INICIO
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
+
+@Injectable({ providedIn: 'root' })
+export class PedidoService {
+
+  private api = `${environment.apiUrl}/pedidos`;
+
+  constructor(private http: HttpClient) {}
+
+  crear(pedido: any) {
+    return this.http.post(this.api, pedido);
+  }
+  listar() {
+    return this.http.get(`${this.api}`);
+  }
+}
+
+
+CONTENIDO FIN
+
+ARCHIVO: app\service\transportista.service.ts
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\app\service\transportista.service.ts
+CONTENIDO INICIO
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+import {Transportista} from '../models/transportista.model';
+
+@Injectable({ providedIn: 'root' })
+export class TransportistaService {
+
+  private api = `${environment.apiUrl}/transportistas`;
+
+  constructor(private http: HttpClient) {}
+
+  crear(data: any) {
+    return this.http.post(this.api, data);
+  }
+
+  listar() {
+    return this.http.get<Transportista[]>(`${this.api}`);
+  }
+
+  listarPorTipo(tipo: string) {
+    return this.http.get(`${this.api}/tipo/${tipo}`);
+  }
+}
+
+CONTENIDO FIN
+
+----------------------------------------------------------------------------------------------------
+CARPETA: environments
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\environments
+
+ARCHIVO: environments\environment.ts
+RUTA ABSOLUTA: D:/Proyecto astramaco iii/frontend-astramaco-iii/src\environments\environment.ts
+CONTENIDO INICIO
+export const environment = {
+  apiUrl: 'http://localhost:8080/api'
+};
+
+CONTENIDO FIN

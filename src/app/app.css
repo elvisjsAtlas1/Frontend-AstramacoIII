@@ -1,0 +1,78 @@
+/* RESET */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* 🔵 TOPBAR */
+.topbar {
+  height: 70px;
+  background: linear-gradient(90deg, #1E3A8A, #1E40AF);
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 30px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* LOGO */
+.logo h2 {
+  margin: 0;
+  font-weight: 600;
+}
+
+/* MENU */
+.menu {
+  display: flex;
+  gap: 25px;
+}
+
+.menu a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  transition: 0.3s;
+}
+
+/* EFECTO HOVER */
+.menu a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: white;
+  transition: 0.3s;
+}
+
+.menu a:hover::after {
+  width: 100%;
+}
+
+/* BOTÓN LOGOUT */
+.logout {
+  background: #DC2626;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.logout:hover {
+  background: #B91C1C;
+}
+
+/* CONTENIDO */
+.content {
+  padding: 30px;
+  background: #F1F5F9;
+  min-height: calc(100vh - 70px);
+}

@@ -1,0 +1,192 @@
+/* 🔥 CONTENEDOR PRINCIPAL */
+.login-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #0A1F44, #1E3A8A);
+  font-family: 'Inter', sans-serif;
+}
+
+/* 💳 TARJETA */
+.login-card {
+  background: #ffffff;
+  padding: 40px;
+  width: 350px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  text-align: center;
+  animation: fadeIn 0.6s ease;
+}
+
+/* 🧾 TITULO */
+.login-card h2 {
+  margin-bottom: 5px;
+  color: #0A1F44;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* SUBTITULO */
+.subtitle {
+  margin-bottom: 25px;
+  color: #6B7280;
+  font-size: 14px;
+}
+
+/* 📦 FORM GROUP */
+.form-group {
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+/* LABEL */
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 13px;
+  color: #374151;
+}
+
+/* INPUT */
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #D1D5DB;
+  border-radius: 6px;
+  outline: none;
+  transition: 0.3s;
+  font-size: 14px;
+}
+
+/* EFECTO FOCUS */
+.form-group input:focus {
+  border-color: #3B82F6;
+  box-shadow: 0 0 5px rgba(59,130,246,0.3);
+}
+
+/* 🔵 BOTON */
+button {
+  width: 100%;
+  padding: 12px;
+  background: #3B82F6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* HOVER */
+button:hover {
+  background: #1E3A8A;
+}
+
+/* ✨ ANIMACION */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* CONTENEDOR DEL INPUT + ICONO */
+.input-icon {
+  position: relative;
+}
+
+/* ICONO */
+.input-icon i {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  color: #6B7280;
+  font-size: 14px;
+}
+
+/* INPUT CON ESPACIO PARA ICONO */
+.input-icon input {
+  width: 100%;
+  padding: 10px 10px 10px 35px;
+  border: 1px solid #D1D5DB;
+  border-radius: 6px;
+  outline: none;
+  font-size: 14px;
+
+  box-sizing: border-box; /* 🔥 CLAVE */
+}
+/* EFECTO FOCUS */
+.input-icon input:focus {
+  border-color: #3B82F6;
+  box-shadow: 0 0 5px rgba(59,130,246,0.3);
+}
+
+/* ICONO ACTIVO */
+.input-icon input:focus + i,
+.input-icon input:focus ~ i {
+  color: #3B82F6;
+}
+
+
+/* 🔥 CONTENEDOR PRINCIPAL */
+.login-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;   /* horizontal */
+  align-items: center;       /* vertical */
+  background: linear-gradient(135deg, #0F172A, #1E3A8A);
+}
+
+/* 🎴 TARJETA LOGIN */
+.login-card {
+  background: #FFFFFF;
+  padding: 40px;
+  width: 320px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+/* TITULO */
+.login-card h2 {
+  margin-bottom: 20px;
+  font-family: 'Poppins', sans-serif;
+  color: #1E3A8A;
+}
+
+/* FORM */
+.form-group {
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+label {
+  font-size: 13px;
+  color: #374151;
+}
+
+/* BOTON */
+button {
+  width: 100%;
+  padding: 10px;
+  background: #1E3A8A;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #3B82F6;
+}
+
+* {
+  box-sizing: border-box;
+}

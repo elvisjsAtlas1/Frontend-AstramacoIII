@@ -1,0 +1,210 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&family=Poppins:wght@600&display=swap');
+
+:root {
+  --primary: #0A1F44;
+  --secondary: #1E3A8A;
+  --accent: #3B82F6;
+
+  --bg: #F5F7FA;
+  --text: #0d2fbd;
+  --text-light: #6B7280;
+
+  --success: #10B981;
+  --error: #EF4444;
+}
+
+/* General */
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  margin: 0;
+  padding: 20px;
+}
+
+/* Contenedor */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 🔵 HEADER DE TABLA */
+.table-container thead {
+  background: linear-gradient(90deg, #0A1F44, #1E3A8A);
+}
+
+.table-container thead th {
+  color: #ffffff !important;
+  padding: 14px;
+  font-weight: 600;
+  text-align: left;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+
+/* Cards */
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+}
+
+/* Header */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h2, h3 {
+  font-family: 'Poppins', sans-serif;
+  color: var(--primary);
+}
+
+.table-container {
+  margin-top: 15px;
+  overflow-x: auto;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.table-container tbody tr {
+  transition: background 0.25s ease;
+}
+
+.table-container tbody tr:hover {
+  background: #EEF2FF; /* 🔵 azul muy suave */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table-container tbody tr td {
+  transition: background 0.25s ease, color 0.2s;
+}
+
+.table-container tbody tr:hover td {
+  background: #E0E7FF; /* 🔥 un poco más fuerte */
+  color: #0A1F44; /* azul oscuro elegante */
+}
+
+th {
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  color: #ffffff;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  font-size: 14px;
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  color: var(--text);
+  font-size: 14px;
+}
+tr:hover {
+  background: #161e8a; /* azul suave */
+  transition: 0.2s;
+}
+/* Estados */
+.status {
+  font-weight: bold;
+}
+
+.status.ok {
+  color: var(--success);
+}
+
+.status.bad {
+  color: var(--error);
+}
+
+/* Botones */
+button {
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #4c8cf3;
+  border: 2px solid #374151; /* 🔥 BORDE COMPLETO */
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background: #1d3c9e; /* azul más oscuro */
+  border-color: #1d3fa3;
+}
+
+.btn-secondary {
+  background: #9dafca;
+}
+
+/* Formulario */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 13px;
+  color: var(--text-light);
+  margin-bottom: 5px;
+}
+
+input, select {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+input:focus, select:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+/* Acciones */
+.form-actions {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.form-container {
+  margin-top: 15px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Animación suave */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

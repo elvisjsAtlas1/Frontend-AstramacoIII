@@ -1,0 +1,135 @@
+<div class="container">
+
+  <!-- 🧾 FORMULARIO -->
+  <div class="card">
+
+    <div class="card-header">
+      <h2>Transportistas</h2>
+
+      <button class="btn-primary" (click)="toggleFormulario()">
+        {{ mostrarFormulario ? '❌ Cerrar formulario' : '➕ Crear Transportista' }}
+      </button>
+    </div>
+
+    <!-- 🔽 FORMULARIO DESPLEGABLE -->
+    <div *ngIf="mostrarFormulario" class="form-container">
+
+      <div class="form-grid">
+
+        <div class="form-group">
+          <label>Nombre</label>
+          <input [(ngModel)]="transportista.nombre">
+        </div>
+
+        <div class="form-group">
+          <label>Apellidos</label>
+          <input [(ngModel)]="transportista.apellidos">
+        </div>
+
+        <div class="form-group">
+          <label>DNI</label>
+          <input [(ngModel)]="transportista.dni">
+        </div>
+
+        <div class="form-group">
+          <label>Edad</label>
+          <input type="number" [(ngModel)]="transportista.edad">
+        </div>
+
+        <div class="form-group">
+          <label>Tipo Transporte</label>
+          <select [(ngModel)]="transportista.tipoTransporte">
+            <option value="CAMIONERO">Camionero</option>
+            <option value="VOLQUETERO">Volquetero</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Placa</label>
+          <input [(ngModel)]="transportista.placa">
+        </div>
+
+        <div class="form-group">
+          <label>Vehículo</label>
+          <input [(ngModel)]="transportista.vehiculoInfo">
+        </div>
+
+        <div class="form-group">
+          <label>Capacidad</label>
+          <input type="number" [(ngModel)]="transportista.capacidad">
+        </div>
+
+        <div class="form-group">
+          <label>Estado</label>
+          <select [(ngModel)]="transportista.estado">
+            <option value="ACTIVO">Activo</option>
+            <option value="INACTIVO">Inactivo</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="form-actions">
+        <button class="btn-primary" (click)="crear()">
+          Crear Transportista
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- 📋 TABLA -->
+  <div class="card">
+
+    <div class="card-header">
+      <h2>Lista de Transportistas</h2>
+      <button class="btn-secondary" (click)="cargar()">
+        🔄 Recargar
+      </button>
+    </div>
+
+    <div class="table-container">
+      <table>
+
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>DNI</th>
+          <th>Edad</th>
+          <th>Tipo</th>
+          <th>Placa</th>
+          <th>Vehículo</th>
+          <th>Capacidad</th>
+          <th>Estado</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let t of transportistas">
+          <td>{{ t.id }}</td>
+          <td>{{ t.nombre }} {{ t.apellidos }}</td>
+          <td>{{ t.dni }}</td>
+          <td>{{ t.edad }}</td>
+          <td>{{ t.tipoTransporte }}</td>
+          <td>{{ t.placa }}</td>
+          <td>{{ t.vehiculoInfo }}</td>
+          <td>{{ t.capacidad }}</td>
+
+          <td>
+            <span class="status"
+                  [class.ok]="t.estado === 'ACTIVO'"
+                  [class.bad]="t.estado === 'INACTIVO'">
+              {{ t.estado }}
+            </span>
+          </td>
+        </tr>
+        </tbody>
+
+      </table>
+    </div>
+
+  </div>
+
+</div>
