@@ -11,24 +11,25 @@
 
       <!-- Cliente -->
       <div class="form-group">
-        <label>Nombre Cliente</label>
-        <input [(ngModel)]="pedido.clienteNombre">
+        <label for="clienteNombre">Nombre Cliente</label>
+        <input id="clienteNombre" name="clienteNombre" [(ngModel)]="pedido.clienteNombre">
       </div>
 
       <div class="form-group">
-        <label>Teléfono</label>
-        <input [(ngModel)]="pedido.clienteTelefono">
+        <label for="clienteTelefono">Teléfono</label>
+        <input id="clienteTelefono" name="clienteTelefono" [(ngModel)]="pedido.clienteTelefono">
       </div>
 
       <div class="form-group">
-        <label>Dirección</label>
-        <input [(ngModel)]="pedido.direccionEnvio">
+        <label for="direccionEnvio">Dirección</label>
+        <input id="direccionEnvio" name="direccionEnvio" [(ngModel)]="pedido.direccionEnvio">
       </div>
 
       <!-- Tipo Transporte -->
       <div class="form-group">
-        <label>Tipo Transporte</label>
-        <select [(ngModel)]="pedido.tipoTransporte"
+        <label for="tipoTransporte">Tipo Transporte</label>
+        <select id="tipoTransporte" name="tipoTransporte"
+                [(ngModel)]="pedido.tipoTransporte"
                 (change)="actualizarMateriales(); cargarTransportistas()">
           <option value="CAMIONERO">Camionero</option>
           <option value="VOLQUETERO">Volquetero</option>
@@ -37,8 +38,9 @@
 
       <!-- Transportista -->
       <div class="form-group">
-        <label>Transportista</label>
-        <select [(ngModel)]="pedido.transportistaId">
+        <label for="transportistaId">Transportista</label>
+        <select id="transportistaId" name="transportistaId"
+                [(ngModel)]="pedido.transportistaId">
           <option *ngFor="let t of transportistas" [value]="t.id">
             {{ t.nombre }} {{ t.apellidos }}
           </option>
@@ -47,8 +49,8 @@
 
       <!-- Material -->
       <div class="form-group">
-        <label>Material</label>
-        <select [(ngModel)]="pedido.material">
+        <label for="material">Material</label>
+        <select id="material" name="material" [(ngModel)]="pedido.material">
           <option value="PANDERETA">Pandereta</option>
           <option value="TECHO">Techo</option>
           <option value="ARENA_GRUESA">Arena Gruesa</option>
@@ -61,28 +63,29 @@
 
       <!-- Datos -->
       <div class="form-group">
-        <label>Cantidad</label>
-        <input type="number" [(ngModel)]="pedido.cantidad">
+        <label for="cantidad">Cantidad</label>
+        <input id="cantidad" name="cantidad" type="number" [(ngModel)]="pedido.cantidad">
       </div>
 
       <div class="form-group">
-        <label>Monto Total</label>
-        <input type="number" [(ngModel)]="pedido.montoTotal">
+        <label for="montoTotal">Monto Total</label>
+        <input id="montoTotal" name="montoTotal" type="number" [(ngModel)]="pedido.montoTotal">
       </div>
 
       <div class="form-group">
-        <label>Adelanto</label>
-        <input type="number" [(ngModel)]="pedido.adelanto">
+        <label for="adelanto">Adelanto</label>
+        <input id="adelanto" name="adelanto" type="number" [(ngModel)]="pedido.adelanto">
       </div>
 
       <div class="form-group">
-        <label>Piso</label>
-        <input type="number" [(ngModel)]="pedido.piso">
+        <label for="piso">Piso</label>
+        <input id="piso" name="piso" type="number" [(ngModel)]="pedido.piso">
       </div>
 
       <div class="form-group">
-        <label>Hora Envío</label>
-        <input type="datetime-local" [(ngModel)]="pedido.horaEnvio">
+        <label for="horaEnvio">Hora Envío</label>
+        <input id="horaEnvio" name="horaEnvio" type="datetime-local"
+               [(ngModel)]="pedido.horaEnvio">
       </div>
 
     </div>
@@ -139,7 +142,9 @@
           <td>{{ p.adelanto }}</td>
           <td>{{ p.piso }}</td>
           <td>{{ p.horaEnvio }}</td>
-          <td>{{ p.transportistaNombre || 'Sin transportista' }}</td>
+          <td>
+            {{ p.transportista?.nombre }} {{ p.transportista?.apellidos || 'Sin transportista' }}
+          </td>
           <td>{{ p.codigoVerificacion }}</td>
 
           <td>

@@ -2,16 +2,15 @@ import {Component} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {TransportistaService} from '../../service/transportista.service';
 import {DocumentoService} from '../../service/documento.service';
-import {NgForOf, NgIf} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {DocumentoPersonal} from '../../models/documento-personal.model';
-import {Transportista} from '../../models/transportista.model';
 import {TransportistaConDocs} from '../../models/transportista-con-docs.model';
 
 
 @Component({
   selector: 'app-documentos',
   standalone: true,
-  imports: [FormsModule, NgForOf, NgIf],
+  imports: [FormsModule, CommonModule],
   templateUrl: './documentos.component.html',
   styleUrl: './documentos.component.css'
 })
@@ -31,8 +30,8 @@ export class DocumentosComponent {
   };
 
   constructor(
-    private transportistaService: TransportistaService,
-    private documentoService: DocumentoService
+    private readonly transportistaService: TransportistaService,
+    private readonly documentoService: DocumentoService
   ) {}
 
 
@@ -60,7 +59,10 @@ export class DocumentosComponent {
       this.transportistas = [];
 
       data.forEach(t => {
-        this.documentoService.listar(t.id!).subscribe((docs) => {
+
+        if (!t.id) return; // ✅ validación segura
+
+        this.documentoService.listar(t.id).subscribe((docs) => {
 
           const transportistaConDocs: TransportistaConDocs = {
             ...t,

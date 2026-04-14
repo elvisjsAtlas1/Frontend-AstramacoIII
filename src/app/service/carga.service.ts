@@ -11,7 +11,7 @@ export class CargaService {
 
   private readonly apiUrl = `${environment.apiUrl}/cargas`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
   listarTodas(): Observable<CargaModel[]> {
     return this.http.get<CargaModel[]>(this.apiUrl);

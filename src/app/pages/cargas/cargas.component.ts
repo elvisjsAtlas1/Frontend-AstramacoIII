@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule, NgForOf, NgIf } from '@angular/common';
+import { CommonModule} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CargaService } from '../../service/carga.service';
 import { CargaModel } from '../../models/carga.model';
@@ -7,7 +7,7 @@ import { CargaModel } from '../../models/carga.model';
 @Component({
   selector: 'app-cargas',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgForOf, NgIf],
+  imports: [CommonModule, FormsModule],
   templateUrl: './cargas.component.html',
   styleUrl: './cargas.component.css'
 })
@@ -20,7 +20,7 @@ export class CargasComponent implements OnInit {
   mensaje = '';
   error = '';
 
-  constructor(private cargaService: CargaService) {}
+  constructor(private readonly cargaService: CargaService) {}
 
   ngOnInit(): void {
     this.cargarCargas();

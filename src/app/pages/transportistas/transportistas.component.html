@@ -17,51 +17,51 @@
       <div class="form-grid">
 
         <div class="form-group">
-          <label>Nombre</label>
-          <input [(ngModel)]="transportista.nombre">
+          <label for="nombre">Nombre</label>
+          <input id="nombre" [(ngModel)]="transportista.nombre">
         </div>
 
         <div class="form-group">
-          <label>Apellidos</label>
-          <input [(ngModel)]="transportista.apellidos">
+          <label for="apellidos">Apellidos</label>
+          <input id="apellidos" [(ngModel)]="transportista.apellidos">
         </div>
 
         <div class="form-group">
-          <label>DNI</label>
-          <input [(ngModel)]="transportista.dni">
+          <label for="dni">DNI</label>
+          <input id="dni" [(ngModel)]="transportista.dni">
         </div>
 
         <div class="form-group">
-          <label>Edad</label>
-          <input type="number" [(ngModel)]="transportista.edad">
+          <label for="edad">Edad</label>
+          <input id="edad" type="number" [(ngModel)]="transportista.edad">
         </div>
 
         <div class="form-group">
-          <label>Tipo Transporte</label>
-          <select [(ngModel)]="transportista.tipoTransporte">
+          <label for="tipoTransporte">Tipo Transporte</label>
+          <select id="tipoTransporte" [(ngModel)]="transportista.tipoTransporte">
             <option value="CAMIONERO">Camionero</option>
             <option value="VOLQUETERO">Volquetero</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label>Placa</label>
-          <input [(ngModel)]="transportista.placa">
+          <label for="placa">Placa</label>
+          <input id="placa" [(ngModel)]="transportista.placa">
         </div>
 
         <div class="form-group">
-          <label>Vehículo</label>
-          <input [(ngModel)]="transportista.vehiculoInfo">
+          <label for="vehiculoInfo">Vehículo</label>
+          <input id="vehiculoInfo" [(ngModel)]="transportista.vehiculoInfo">
         </div>
 
         <div class="form-group">
-          <label>Capacidad</label>
-          <input type="number" [(ngModel)]="transportista.capacidad">
+          <label for="capacidad">Capacidad</label>
+          <input id="capacidad" type="number" [(ngModel)]="transportista.capacidad">
         </div>
 
         <div class="form-group">
-          <label>Estado</label>
-          <select [(ngModel)]="transportista.estado">
+          <label for="estado">Estado</label>
+          <select id="estado" [(ngModel)]="transportista.estado">
             <option value="ACTIVO">Activo</option>
             <option value="INACTIVO">Inactivo</option>
           </select>

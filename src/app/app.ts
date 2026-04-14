@@ -11,7 +11,7 @@ import {CommonModule} from '@angular/common';
   styleUrl: './app.css'
 })
 export class App {
-  constructor(private authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {}
 
   isLoggedIn(): boolean {
     return this.authService.estaLogueado();

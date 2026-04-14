@@ -1,19 +1,21 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
+import {Pedido} from '../models/pedido.model';
+import {Observable} from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class PedidoService {
 
-  private api = `${environment.apiUrl}/pedidos`;
+  private readonly api = `${environment.apiUrl}/pedidos`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
-  crear(pedido: any) {
+  crear(pedido: Pedido): Observable<any> {
     return this.http.post(this.api, pedido);
   }
-  listar() {
-    return this.http.get(`${this.api}`);
+
+  listar(): Observable<Pedido[]> {
+    return this.http.get<Pedido[]>(this.api);
   }
 }
-

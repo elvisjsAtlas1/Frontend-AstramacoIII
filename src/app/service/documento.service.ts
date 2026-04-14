@@ -6,9 +6,9 @@ import {DocumentoPersonal} from '../models/documento-personal.model';
 @Injectable({ providedIn: 'root' })
 export class DocumentoService {
 
-  private api = `${environment.apiUrl}/documentos`;
+  private readonly api = `${environment.apiUrl}/documentos`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
   // 🔥 CREAR DOCUMENTO
   crear(transportistaId: number, doc: any) {

@@ -83,8 +83,9 @@
 
       <!-- Tipo -->
       <div class="form-group">
-        <label>Tipo Documento</label>
-        <select [(ngModel)]="documento.tipoDocumento">
+        <label for="tipoDocumento">Tipo Documento</label>
+        <select id="tipoDocumento" name="tipoDocumento"
+                [(ngModel)]="documento.tipoDocumento">
           <option value="SOAT">SOAT</option>
           <option value="REVISION_TECNICA">REVISION TECNICA</option>
           <option value="LICENCIA">LICENCIA</option>
@@ -96,26 +97,32 @@
       <!-- Campos con fechas -->
       <ng-container *ngIf="esDocumentoConFechas()">
         <div class="form-group">
-          <label>Código / Número</label>
-          <input [(ngModel)]="documento.valor">
+          <label for="valor">Código / Número</label>
+          <input id="valor" name="valor"
+                 [(ngModel)]="documento.valor">
         </div>
 
         <div class="form-group">
-          <label>Fecha Emisión</label>
-          <input type="date" [(ngModel)]="documento.fechaEmision">
+          <label for="fechaEmision">Fecha Emisión</label>
+          <input id="fechaEmision" name="fechaEmision"
+                 type="date"
+                 [(ngModel)]="documento.fechaEmision">
         </div>
 
         <div class="form-group">
-          <label>Fecha Vencimiento</label>
-          <input type="date" [(ngModel)]="documento.fechaVencimiento">
+          <label for="fechaVencimiento">Fecha Vencimiento</label>
+          <input id="fechaVencimiento" name="fechaVencimiento"
+                 type="date"
+                 [(ngModel)]="documento.fechaVencimiento">
         </div>
       </ng-container>
 
       <!-- Campos simples -->
       <ng-container *ngIf="!esDocumentoConFechas()">
         <div class="form-group">
-          <label>Estado</label>
-          <select [(ngModel)]="documento.valor">
+          <label for="estadoDocumento">Estado</label>
+          <select id="estadoDocumento" name="estadoDocumento"
+                  [(ngModel)]="documento.valor">
             <option value="SI">SI</option>
             <option value="NO">NO</option>
           </select>
@@ -124,8 +131,9 @@
 
       <!-- Activo -->
       <div class="form-group">
-        <label>Activo</label>
-        <select [(ngModel)]="documento.activo">
+        <label for="activo">Activo</label>
+        <select id="activo" name="activo"
+                [(ngModel)]="documento.activo">
           <option [ngValue]="true">Activo</option>
           <option [ngValue]="false">Inactivo</option>
         </select>

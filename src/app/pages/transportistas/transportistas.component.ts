@@ -1,20 +1,40 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {TransportistaService} from '../../service/transportista.service';
-import {DocumentoService} from '../../service/documento.service';
+import { TransportistaService } from '../../service/transportista.service';
+import { DocumentoService } from '../../service/documento.service';
+import { Transportista } from '../../models/transportista.model';
+import { DocumentoPersonal } from '../../models/documento-personal.model';
+
+type TransportistaRequest = {
+  nombre: string;
+  apellidos: string;
+  dni: string;
+  edad: number;
+  tipoTransporte: 'CAMIONERO' | 'VOLQUETERO';
+  placa: string;
+  vehiculoInfo: string;
+  capacidad: number;
+  estado: 'ACTIVO' | 'INACTIVO';
+};
+
+type DocumentoRequest = {
+  tipoDocumento: 'SOAT' | 'REVISION_TECNICA' | 'LICENCIA' | 'TARJETA_CIRCULACION' | 'DNI';
+  valor: string;
+  fechaEmision: string;
+  fechaVencimiento: string;
+};
 
 @Component({
   selector: 'app-transportistas',
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './transportistas.component.html',
-  styleUrl: './transportistas.component.css'
+  styleUrls: ['./transportistas.component.css']
 })
 export class TransportistasComponent {
 
-  // 🔵 TRANSPORTISTA (QUITAMOS usuarioId)
-  transportista = {
+  transportista: TransportistaRequest = {
     nombre: '',
     apellidos: '',
     dni: '',
@@ -26,75 +46,117 @@ export class TransportistasComponent {
     estado: 'ACTIVO'
   };
 
-  // 🔵 LISTA
-  transportistas: any[] = [];
+  transportistas: Transportista[] = [];
 
-  // 🔥 DOCUMENTOS
   selectedTransportistaId: number | null = null;
 
-  documento = {
+  documento: DocumentoRequest = {
     tipoDocumento: 'SOAT',
     valor: '',
     fechaEmision: '',
     fechaVencimiento: ''
   };
 
-  documentos: any[] = [];
+  documentos: DocumentoPersonal[] = [];
+
+  mostrarFormulario = false;
 
   constructor(
-    private service: TransportistaService,
-    private documentoService: DocumentoService
+    private readonly service: TransportistaService,
+    private readonly documentoService: DocumentoService
   ) {}
 
-  // 🔥 CREAR TRANSPORTISTA
-  crear() {
-    this.service.crear(this.transportista)
-      .subscribe(() => {
+  crear(): void {
+    this.service.crear(this.transportista).subscribe({
+      next: () => {
         alert('Transportista creado');
-        this.cargar(); // recarga lista
-      });
+        this.limpiarFormulario();
+        this.cargar();
+      },
+      error: (error: unknown) => {
+        console.error('Error al crear transportista', error);
+        alert('No se pudo crear el transportista');
+      }
+    });
   }
 
-
-  cargar() {
-    this.service.listar()
-      .subscribe((data: any) => this.transportistas = data);
+  cargar(): void {
+    this.service.listar().subscribe({
+      next: (data: Transportista[]) => {
+        this.transportistas = data ?? [];
+      },
+      error: (error: unknown) => {
+        console.error('Error al cargar transportistas', error);
+        this.transportistas = [];
+      }
+    });
   }
 
-  // 🔥 SELECCIONAR TRANSPORTISTA
-  seleccionarTransportista(id: number) {
+  seleccionarTransportista(id: number): void {
     this.selectedTransportistaId = id;
     this.cargarDocumentos();
   }
 
-  // 🔥 CREAR DOCUMENTO
-  crearDocumento() {
-    if (!this.selectedTransportistaId) {
+  crearDocumento(): void {
+    if (this.selectedTransportistaId === null) {
       alert('Seleccione un transportista');
       return;
     }
 
-
-
-    this.documentoService.crear(this.selectedTransportistaId, this.documento)
-      .subscribe(() => {
+    this.documentoService.crear(this.selectedTransportistaId, this.documento).subscribe({
+      next: () => {
         alert('Documento agregado');
+        this.limpiarDocumento();
         this.cargarDocumentos();
-      });
+      },
+      error: (error: unknown) => {
+        console.error('Error al crear documento', error);
+        alert('No se pudo agregar el documento');
+      }
+    });
   }
 
-  // 🔥 LISTAR DOCUMENTOS
-  cargarDocumentos() {
-    if (!this.selectedTransportistaId) return;
+  cargarDocumentos(): void {
+    if (this.selectedTransportistaId === null) {
+      this.documentos = [];
+      return;
+    }
 
-    this.documentoService.listar(this.selectedTransportistaId)
-      .subscribe((data: any) => this.documentos = data);
+    this.documentoService.listar(this.selectedTransportistaId).subscribe({
+      next: (data: DocumentoPersonal[]) => {
+        this.documentos = data ?? [];
+      },
+      error: (error: unknown) => {
+        console.error('Error al cargar documentos', error);
+        this.documentos = [];
+      }
+    });
   }
 
-  mostrarFormulario: boolean = false;
-
-  toggleFormulario() {
+  toggleFormulario(): void {
     this.mostrarFormulario = !this.mostrarFormulario;
   }
 
+  private limpiarFormulario(): void {
+    this.transportista = {
+      nombre: '',
+      apellidos: '',
+      dni: '',
+      edad: 0,
+      tipoTransporte: 'CAMIONERO',
+      placa: '',
+      vehiculoInfo: '',
+      capacidad: 0,
+      estado: 'ACTIVO'
+    };
+  }
+
+  private limpiarDocumento(): void {
+    this.documento = {
+      tipoDocumento: 'SOAT',
+      valor: '',
+      fechaEmision: '',
+      fechaVencimiento: ''
+    };
+  }
 }

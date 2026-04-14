@@ -10,8 +10,10 @@
 
     <div class="form-grid">
       <div class="form-group">
-        <label>Buscar transportista por nombre</label>
+        <label for="textoBusqueda">Buscar transportista por nombre</label>
         <input
+          id="textoBusqueda"
+          name="textoBusqueda"
           type="text"
           [(ngModel)]="textoBusqueda"
           (input)="filtrarCargas()"

@@ -4,7 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #0A1F44, #1E3A8A);
+  background: linear-gradient(135deg, #0F172A, #1E3A8A);
   font-family: 'Inter', sans-serif;
 }
 
@@ -12,17 +12,17 @@
 .login-card {
   background: #ffffff;
   padding: 40px;
-  width: 350px;
+  width: 320px;
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   text-align: center;
   animation: fadeIn 0.6s ease;
 }
 
 /* 🧾 TITULO */
 .login-card h2 {
-  margin-bottom: 5px;
-  color: #0A1F44;
+  margin-bottom: 10px;
+  color: #1E3A8A;
   font-family: 'Poppins', sans-serif;
 }
 
@@ -68,18 +68,19 @@
 button {
   width: 100%;
   padding: 12px;
-  background: #3B82F6;
+  background: #1E3A8A;
   color: white;
   border: none;
   border-radius: 6px;
   font-weight: 500;
+  margin-top: 10px;
   cursor: pointer;
   transition: 0.3s;
 }
 
 /* HOVER */
 button:hover {
-  background: #1E3A8A;
+  background: #3B82F6;
 }
 
 /* ✨ ANIMACION */
@@ -94,7 +95,7 @@ button:hover {
   }
 }
 
-/* CONTENEDOR DEL INPUT + ICONO */
+/* INPUT CON ICONO */
 .input-icon {
   position: relative;
 }
@@ -117,10 +118,10 @@ button:hover {
   border-radius: 6px;
   outline: none;
   font-size: 14px;
-
-  box-sizing: border-box; /* 🔥 CLAVE */
+  box-sizing: border-box;
 }
-/* EFECTO FOCUS */
+
+/* FOCUS */
 .input-icon input:focus {
   border-color: #3B82F6;
   box-shadow: 0 0 5px rgba(59,130,246,0.3);
@@ -132,61 +133,7 @@ button:hover {
   color: #3B82F6;
 }
 
-
-/* 🔥 CONTENEDOR PRINCIPAL */
-.login-container {
-  height: 100vh;
-  display: flex;
-  justify-content: center;   /* horizontal */
-  align-items: center;       /* vertical */
-  background: linear-gradient(135deg, #0F172A, #1E3A8A);
-}
-
-/* 🎴 TARJETA LOGIN */
-.login-card {
-  background: #FFFFFF;
-  padding: 40px;
-  width: 320px;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  text-align: center;
-}
-
-/* TITULO */
-.login-card h2 {
-  margin-bottom: 20px;
-  font-family: 'Poppins', sans-serif;
-  color: #1E3A8A;
-}
-
-/* FORM */
-.form-group {
-  text-align: left;
-  margin-bottom: 15px;
-}
-
-label {
-  font-size: 13px;
-  color: #374151;
-}
-
-/* BOTON */
-button {
-  width: 100%;
-  padding: 10px;
-  background: #1E3A8A;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  margin-top: 10px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  background: #3B82F6;
-}
-
+/* GLOBAL */
 * {
   box-sizing: border-box;
 }

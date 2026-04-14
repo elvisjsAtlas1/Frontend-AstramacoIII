@@ -6,6 +6,6 @@ export const authGuard: CanActivateFn = () => {
 
   if (token) return true;
 
-  window.location.href = '/login';
+  globalThis.location.href = '/login';
   return false;
 };
