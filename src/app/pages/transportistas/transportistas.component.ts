@@ -465,8 +465,9 @@ export class TransportistasComponent implements OnInit {
       return false;
     }
 
-    if (!this.transportista.edad || this.transportista.edad < 18) {
-      this.mostrarMensaje('⚠️ La edad mínima es 18 años');
+    const edadNumero = Number(this.transportista.edad);
+    if (isNaN(edadNumero) || edadNumero < 18 || edadNumero > 100) {
+      this.mostrarMensaje('⚠️ La edad debe ser un número válido entre 18 y 100 años');
       return false;
     }
 
