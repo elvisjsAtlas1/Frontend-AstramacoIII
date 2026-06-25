@@ -1,210 +1,633 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter&family=Poppins:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap');
 
 :root {
-  --primary: #0A1F44;
-  --secondary: #1E3A8A;
-  --accent: #3B82F6;
-
-  --bg: #F5F7FA;
-  --text: #0d2fbd;
-  --text-light: #6B7280;
-
+  /* Paleta Oscura y Viva extraída de tu Login */
+  --bg-primary: #0F172A;
+  --bg-secondary: #1E1B4B;
+  --brand: #3B82F6;        /* Azul eléctrico */
+  --brand-gradient: linear-gradient(135deg, #3B82F6, #7C3AED); /* Mezcla Azul + Morado */
+  
+  --text-main: #FFFFFF;    /* Texto brillante */
+  --text-muted: #94A3B8;   /* Texto grisáceo suave para labels y secundarios */
+  
   --success: #10B981;
+  --success-bg: rgba(16, 185, 129, 0.15);
   --error: #EF4444;
+  --error-bg: rgba(239, 68, 68, 0.15);
 }
 
 /* General */
 body {
   font-family: 'Inter', sans-serif;
-  background: var(--bg);
+  /* Fondo dinámico idéntico al del Login */
+  background: radial-gradient(circle at 10% 15%, #2563EB, transparent 35%),
+              radial-gradient(circle at 90% 85%, #7C3AED, transparent 40%),
+              linear-gradient(135deg, #0F172A, #111827);
+  color: var(--text-main);
   margin: 0;
-  padding: 20px;
+  padding: 24px;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Contenedor */
+/* Contenedor principal */
 .container {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: auto;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
 }
 
-/* 🔵 HEADER DE TABLA */
-.table-container thead {
-  background: linear-gradient(90deg, #0A1F44, #1E3A8A);
-}
-
-.table-container thead th {
-  color: #ffffff !important;
-  padding: 14px;
-  font-weight: 600;
-  text-align: left;
-  font-size: 14px;
-  letter-spacing: 0.5px;
-}
-
-
-/* Cards */
-.card {
-  background: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.05);
-}
-
-/* Header */
-.card-header {
+/* 🚀 BARRA DE HERRAMIENTAS (TOOLBAR) */
+.toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-bottom: 8px;
 }
 
-h2, h3 {
+.toolbar-left h1 {
   font-family: 'Poppins', sans-serif;
-  color: var(--primary);
+  color: var(--text-main);
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.table-container {
-  margin-top: 15px;
-  overflow-x: auto;
+/* 🔍 CONTENEDORES DE CRISTAL (GLASSMORPHISM) */
+.filtros, .card {
+  background: rgba(255, 255, 255, 0.05); /* Efecto cristal translúcido */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* 🔍 CONTENEDOR PADRE DE LOS FILTROS */
+.filtros {
+  display: flex;
+  flex-wrap: wrap;       /* Permite que colapsen en pantallas chicas */
+  gap: 16px;             /* 🔥 ESTO SEPARA EL BUSCADOR DEL SELECT HORIZONTALMENTE */
+  row-gap: 20px;         /* Separa verticalmente */
+  align-items: center;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.04) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 20px;
+}
+
+/* 📦 CADA CAJITA DE FILTRO (Asegura que no se encimen) */
+.filtro-group {
+  flex: 1 1 200px;       /* Permite que compartan espacio de forma fluida */
+  min-width: 180px;      /* Ancho mínimo antes de saltar de línea */
+  display: block;        /* Aísla el contenido interno */
+}
+
+/* 🔥 HACE QUE EL BUSCADOR SEA MÁS ANCHO PERO RESPETE EL GAP */
+.filtro-group:first-child {
+  flex: 2 1 300px;       /* Le da prioridad para estirarse elegantemente */
+}
+
+/* ⌨️ ASEGURAR QUE LOS INPUTS SE AJUSTEN AL TAMAÑO DE SU CAJITA */
+.filtro-input, .filtro-select, .filtros input, .filtros select {
+  width: 100% !important; /* 🔥 Obliga al input a quedarse DENTRO de su filtro-group */
+  box-sizing: border-box; /* Evita que el padding los ensanche de más */
+  padding: 12px 16px;
   border-radius: 12px;
-  background: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(15, 23, 42, 0.7) !important;
+  color: #FFFFFF !important;
+}
+/* ✖ BOTÓN LIMPIAR */
+.btn-clear {
+  padding: 12px 20px; /* Sincroniza la altura exacta con los inputs */
+  height: 46px; /* Forzamos la misma altura que los select/inputs para alineación perfecta */
+  background: transparent;
+  color: #F87171;
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-clear:hover {
+  background: rgba(239, 68, 68, 0.15);
 }
 
-.table-container tbody tr {
-  transition: background 0.25s ease;
+.filtro-input::placeholder, input::placeholder {
+  color: #57657A;
 }
 
-.table-container tbody tr:hover {
-  background: #EEF2FF; /* 🔵 azul muy suave */
+/* Focus reactivo brillante */
+.filtro-input:focus, .filtro-select:focus, input:focus, select:focus {
+  border-color: #3B82F6;
+  background-color: rgba(15, 23, 42, 0.8);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25);
+  outline: none;
+}
+
+/* EN TU transportistas.component.css */
+
+/* Asegura que las tarjetas sean translúcidas oscuras y no blancas */
+.card, .filtros {
+  background: rgba(255, 255, 255, 0.04) !important; 
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* El contenedor interno de la tabla */
+.table-container {
+  overflow-x: auto;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(15, 23, 42, 0.5) !important;
+}
+
+/* Encabezados de la tabla */
+table thead {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+table th {
+  color: #94A3B8 !important; /* Texto gris claro para los títulos de columnas */
+  font-family: 'Poppins', sans-serif;
+  padding: 16px;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.75px;
+  text-transform: uppercase;
+}
+
+/* Inputs y Selects */
+.filtro-input, .filtro-select, input, select {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(15, 23, 42, 0.7) !important;
+  color: #FFFFFF !important;
+  font-size: 14px;
+}
+
+/* Botón Nuevo Transportista (el que se ve en blanco en la captura) */
+.btn-primary {
+  background: linear-gradient(135deg, #3B82F6, #7C3AED) !important;
+  color: white !important;
+  border: none !important;
+  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.3);
+}
+
+/* Evitar que las opciones del select hereden la transparencia */
+select option {
+  background-color: #1E1B4B;
+  color: var(--text-main);
+}
+
+/* 📊 TABLA ESTILO CRISTAL */
+.table-container {
+  overflow-x: auto;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(15, 23, 42, 0.4);
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.table-container tbody tr td {
-  transition: background 0.25s ease, color 0.2s;
-}
-
-.table-container tbody tr:hover td {
-  background: #E0E7FF; /* 🔥 un poco más fuerte */
-  color: #0A1F44; /* azul oscuro elegante */
-}
-
-th {
-  background: linear-gradient(90deg, var(--primary), var(--secondary));
-  color: #ffffff;
-  padding: 12px;
   text-align: left;
+}
+
+table thead {
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+table th {
+  color: var(--text-muted);
+  font-family: 'Poppins', sans-serif;
+  padding: 16px;
   font-weight: 600;
-  letter-spacing: 0.5px;
+  font-size: 13px;
+  letter-spacing: 0.75px;
+  text-transform: uppercase;
+}
+
+table tbody tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background-color 0.2s ease;
+}
+
+table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+table td {
+  padding: 16px;
+  color: var(--text-main);
   font-size: 14px;
 }
 
-td {
-  padding: 12px;
-  border-bottom: 1px solid #eee;
-  color: var(--text);
-  font-size: 14px;
+/* 🏷️ BADGES VIVOS */
+.badge {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60A5FA;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
 }
-tr:hover {
-  background: #161e8a; /* azul suave */
-  transition: 0.2s;
+
+.tipo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-main);
 }
-/* Estados */
+.tipo-badge.camionero {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60A5FA;
+}
+
 .status {
-  font-weight: bold;
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
+.status.ok { background: var(--success-bg); color: var(--success); }
+.status.bad { background: var(--error-bg); color: var(--error); }
 
-.status.ok {
-  color: var(--success);
-}
-
-.status.bad {
-  color: var(--error);
-}
-
-/* Botones */
+/* 🎛️ BOTONES COMBINANDO AZUL Y MORADO */
 button {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
   border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
+  padding: 12px 20px;
+  border-radius: 12px;
   cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .btn-primary {
-  background: var(--accent);
-  color: #4c8cf3;
-  border: 2px solid #374151; /* 🔥 BORDE COMPLETO */
-  padding: 8px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: 0.3s;
+  background: var(--brand-gradient); /* Degradado Vivo */
+  color: white;
+  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.3);
 }
-
 .btn-primary:hover {
-  background: #1d3c9e; /* azul más oscuro */
-  border-color: #1d3fa3;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5);
+  filter: brightness(1.1);
+}
+.btn-primary:disabled {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.3);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .btn-secondary {
-  background: #9dafca;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-main);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
 }
 
-/* Formulario */
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
-  margin-top: 15px;
+
+.btn-clear:hover {
+  background: var(--error-bg);
 }
 
-.form-group {
-  display: flex;
-  flex-direction: column;
+/* Acciones rápidas de la tabla */
+.acciones button {
+  padding: 8px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 14px;
+}
+.acciones button:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(1.08);
+}
+
+/* TITULARES INTERNOS */
+h3 {
+  font-family: 'Poppins', sans-serif;
+  color: var(--text-main);
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
 }
 
 label {
   font-size: 13px;
-  color: var(--text-light);
-  margin-bottom: 5px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  letter-spacing: 0.25px;
 }
 
-input, select {
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+/* ℹ️ CUADRO DE INFORMACIÓN (CAMIONEROS) */
+.info-message {
+  background: rgba(59, 130, 246, 0.1);
+  border-left: 4px solid #3B82F6;
+  padding: 14px 18px;
+  border-radius: 12px;
+  color: #93C5FD;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
-input:focus, select:focus {
-  border-color: var(--accent);
-  outline: none;
+/* 📝 CONTENEDOR GRID DE LOS INPUTS DEL FORMULARIO */
+.form-grid {
+  display: grid;
+  /* Mantiene las columnas flexibles como las tenías */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+  
+  /* 🔥 AQUÍ ESTÁ EL TRUCO: Separa las filas y columnas del formulario */
+  gap: 24px 20px; /* 24px de separación vertical entre filas, 20px horizontal */
+  
+  margin-top: 20px; /* Separa el formulario del título "Nuevo Transportista" */
 }
 
-/* Acciones */
+/* 📦 CADA BLOQUE INDIVIDUAL (LABEL + INPUT) */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Alinea los textos a la izquierda */
+  width: 100%;
+}
+
+/* 🏷️ ESTILIZADO Y SEPARACIÓN DE LAS ETIQUETAS (TEXTOS) */
+.form-group label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #94A3B8; /* Color gris suave text-muted */
+  
+  /* 🔥 SEPARACIÓN AUTOMÁTICA: Despega el texto del input de abajo */
+  margin-bottom: 8px !important; 
+  
+  letter-spacing: 0.25px;
+  display: block;
+}
+
+/* ⌨️ ASEGURAR QUE LOS INPUTS OCUPEN EL 100% SIN DESBORDARSE */
+.form-group input, 
+.form-group select,
+.form-group .custom-dropdown {
+  width: 100% !important;
+  box-sizing: border-box; /* Evita que el padding rompa el tamaño del input */
+}
+
+/* 🏁 ACCIONES DEL FORMULARIO (BOTONES GUARDAR / CANCELAR) */
 .form-actions {
-  margin-top: 20px;
-  text-align: right;
+  margin-top: 32px; /* 🔥 Separa la fila de botones de la última fila de inputs */
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px; /* Separa el botón Cancelar del botón Guardar */
+  width: 100%;
 }
 
-.form-container {
-  margin-top: 15px;
-  animation: fadeIn 0.3s ease-in-out;
+
+/* ==========================================================================
+   🔮 DISEÑO PREMIUM PARA EL MODAL DE CONFIRMACIÓN (GLASSMORPHISM)
+   ========================================================================== */
+
+/* 🪟 1. FONDO OSCURO DIFUMINADO COMPLETO */
+.confirm-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(9, 13, 22, 0.4) !important; /* Capa oscura translúcida */
+  backdrop-filter: blur(12px) saturate(160%);   /* Desenfoque de fondo premium */
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  display: flex;
+  justify-content: center;          /* Centrado horizontal exacto */
+  align-items: center;              /* Centrado vertical exacto */
+  z-index: 2000;                    /* Por encima de todo */
+  animation: overlayFadeIn 0.25s ease-out;
 }
 
-/* Animación suave */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* 💳 2. LA TARJETA DE CRISTAL (CONFIRM-CARD) */
+.confirm-card {
+  background: rgba(15, 23, 42, 0.85) !important; /* Fondo idéntico al login */
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.12) !important; /* Borde brillante sutil */
+  border-radius: 24px !important;   /* Bordes muy suaves y redondeados */
+  padding: 35px !important;
+  width: 90%;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6) !important;
+  /* Animación de emergencia elástica (Efecto Pop-up vivo) */
+  animation: cardScaleUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 🎨 3. ICONO INTERACTIVO CON PULSO */
+.confirm-icon {
+  width: 64px;
+  height: 64px;
+  background: rgba(59, 130, 246, 0.15) !important;
+  border: 1px solid rgba(59, 130, 246, 0.3) !important;
+  border-radius: 50% !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 26px;
+  margin: 0 auto 20px auto;
+}
+
+/* 📝 4. TEXTOS DEL MODAL */
+.confirm-card h2 {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  color: #FFFFFF !important;        /* Forzamos texto blanco brillante */
+  margin: 0 0 12px 0 !important;
+}
+
+.confirm-card p {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 14px !important;
+  color: #94A3B8 !important;        /* Color gris suave text-muted */
+  line-height: 1.6 !important;
+  margin: 0 0 28px 0 !important;
+}
+
+/* 🎛️ 5. CONTENEDOR DE BOTONES ALINEADOS */
+.confirm-actions {
+  display: flex !important;
+  gap: 14px !important;             /* Separación limpia entre botones */
+  justify-content: center !important;
+  width: 100% !important;
+  margin-top: 0 !important;
+}
+
+/* ❌ 6. BOTÓN CANCELAR ELEGANTE (IZQUIERDA) */
+.btn-cancel {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #E2E8F0 !important;
+  padding: 12px 20px !important;
+  border-radius: 12px !important;   /* Bordes redondeados en armonía */
+  font-weight: 600 !important;
+  cursor: pointer;
+  transition: all 0.2s ease !important;
+}
+
+.btn-cancel:hover {
+  background: rgba(239, 68, 68, 0.15) !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+  color: #F87171 !important;        /* Brillo rojizo al pasar el mouse */
+}
+
+/* ✨ 7. BOTÓN CONFIRMAR CON DEGRADADO VIVO (DERECHA) */
+.btn-confirm-submit {
+  flex: 1;
+  background: linear-gradient(135deg, #3B82F6, #7C3AED) !important; /* Mezcla Azul + Morado del Login */
+  color: white !important;
+  border: none !important;
+  padding: 12px 20px !important;
+  border-radius: 12px !important;   /* Mismo radio que el de cancelar */
+  font-weight: 600 !important;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.3) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.btn-confirm-submit:hover:not(:disabled) {
+  transform: translateY(-2px);      /* Pequeña elevación física */
+  box-shadow: 0 6px 18px rgba(124, 58, 237, 0.5) !important;
+  filter: brightness(1.15);
+}
+
+.btn-confirm-submit:disabled {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: rgba(255, 255, 255, 0.3) !important;
+  cursor: not-allowed;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* ✉️ CONTENEDOR FLOTANTE EN LA ESQUINA INFERIOR DERECHA */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: rgba(15, 23, 42, 0.9) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(16, 185, 129, 0.3) !important; /* Borde verde éxito */
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  z-index: 3000; /* Por encima de absolutamente todo */
+  overflow: hidden;
+  max-width: 350px;
+  animation: toastSlideIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Cambiar el color si es un mensaje de error */
+.toast-container.error {
+  border-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+.toast-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.toast-icon {
+  font-size: 18px;
+}
+
+.toast-message {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #FFFFFF !important;
+  font-weight: 500;
+}
+
+/* ⏳ BARRA DE TIEMPO SUTIL */
+.toast-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background: linear-gradient(90deg, #10B981, #3B82F6);
+  animation: toastProgressAnim 4s linear forwards;
+}
+
+.toast-container.error .toast-progress {
+  background: linear-gradient(90deg, #EF4444, #F59E0B);
+}
+
+/* 🎞️ ANIMACIONES */
+@keyframes toastSlideIn {
+  from { transform: translateX(100%) translateY(10px); opacity: 0; }
+  to { transform: translateX(0) translateY(0); opacity: 1; }
+}
+
+@keyframes toastProgressAnim {
+  from { width: 100%; }
+  to { width: 0%; }
+}
+
+/* 🎞️ 8. ANIMACIONES DE ENTRADA */
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes cardScaleUp {
+  from { transform: scale(0.9) translateY(15px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-actions {
+  margin-top: 28px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
 }

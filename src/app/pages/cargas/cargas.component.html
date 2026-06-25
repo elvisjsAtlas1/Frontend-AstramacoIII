@@ -17,16 +17,8 @@
           type="text"
           [(ngModel)]="textoBusqueda"
           (input)="filtrarCargas()"
-          placeholder="Ej. Juan Quispe">
+          placeholder="🔍 Ej. Juan Quispe">
       </div>
-    </div>
-
-    <div *ngIf="mensaje" class="alert success">
-      {{ mensaje }}
-    </div>
-
-    <div *ngIf="error" class="alert error">
-      {{ error }}
     </div>
   </div>
 
@@ -38,32 +30,40 @@
     <div class="table-container" *ngIf="cargasFiltradas.length > 0; else sinResultados">
       <table>
         <thead>
-        <tr>
-          <th>ID Carga</th>
-          <th>ID Transportista</th>
-          <th>Transportista</th>
-          <th>Material actual</th>
-          <th>Cantidad disponible</th>
-        </tr>
+          <tr>
+            <th>ID Carga</th>
+            <th>ID Transportista</th>
+            <th>Transportista</th>
+            <th>Material actual</th>
+            <th>Cantidad disponible</th>
+          </tr>
         </thead>
 
         <tbody>
-        <tr *ngFor="let carga of cargasFiltradas">
-          <td>{{ carga.id }}</td>
-          <td>{{ carga.transportistaId }}</td>
-          <td>{{ carga.transportistaNombre }}</td>
-          <td>{{ carga.tipoMaterial }}</td>
-          <td>{{ carga.cantidadDisponible }}</td>
-        </tr>
+          <tr *ngFor="let carga of cargasFiltradas">
+            <td><code>#{{ carga.id }}</code></td>
+            <td><code>ID: {{ carga.transportistaId }}</code></td>
+            <td><strong>{{ carga.transportistaNombre }}</strong></td>
+            <td><span class="material-badge">{{ carga.tipoMaterial }}</span></td>
+            <td><span class="cantidad-badge">{{ carga.cantidadDisponible }} m³</span></td>
+          </tr>
         </tbody>
       </table>
     </div>
 
     <ng-template #sinResultados>
       <div class="empty-box">
-        No se encontraron transportistas con carga registrada para la búsqueda actual.
+        💡 No se encontraron transportistas con carga registrada para la búsqueda actual.
       </div>
     </ng-template>
+  </div>
+
+  <div class="toast-container" *ngIf="toast.visible" [class.error]="toast.isError">
+    <div class="toast-content">
+      <span class="toast-icon">{{ toast.isError ? '❌' : '✅' }}</span>
+      <p class="toast-message">{{ toast.message }}</p>
+    </div>
+    <div class="toast-progress"></div>
   </div>
 
 </div>

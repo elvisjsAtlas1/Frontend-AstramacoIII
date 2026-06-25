@@ -1,193 +1,338 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter&family=Poppins:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap');
 
 :root {
-  --primary: #0A1F44;
-  --secondary: #1E3A8A;
-  --accent: #3B82F6;
-
-  --bg: #F5F7FA;
-  --text: #0d2fbd;
-  --text-light: #6B7280;
-
+  --brand-gradient: linear-gradient(135deg, #3B82F6, #7C3AED);
   --success: #10B981;
+  --success-bg: rgba(16, 185, 129, 0.15);
   --error: #EF4444;
+  --error-bg: rgba(239, 68, 68, 0.15);
+  --warning: #F59E0B;
+  --warning-bg: rgba(245, 158, 11, 0.15);
+  --text-muted: #94A3B8;
 }
 
-/* General */
-body {
-  font-family: 'Inter', sans-serif;
-  background: var(--bg);
-  margin: 0;
-  padding: 20px;
-}
-
-/* Contenedor */
+/* Contenedor principal */
 .container {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: auto;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
 }
 
-/* 🔵 HEADER DE TABLA */
-.table-container thead {
-  background: linear-gradient(90deg, #0A1F44, #1E3A8A);
-}
-
-.table-container thead th {
-  color: #ffffff !important;
-  padding: 14px;
-  font-weight: 600;
-  text-align: left;
-  font-size: 14px;
-  letter-spacing: 0.5px;
-}
-
-
-/* Cards */
-.card {
-  background: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.05);
-}
-
-/* Header */
-.card-header {
+/* 🚀 BARRA DE HERRAMIENTAS (TOOLBAR) */
+.toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
-h2, h3 {
+.toolbar-left h1 {
   font-family: 'Poppins', sans-serif;
-  color: var(--primary);
+  color: #FFFFFF;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.table-container {
-  margin-top: 15px;
-  overflow-x: auto;
+/* 🔍 SECCIÓN DE FILTROS EN LÍNEA */
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  row-gap: 20px;
+  align-items: center;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.04) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.filtro-group {
+  flex: 1 1 220px;
+  min-width: 180px;
+}
+
+.filtro-group:first-child {
+  flex: 2 1 320px; /* Prioridad de ancho a la barra de búsqueda */
+}
+
+/* ⌨️ INPUTS, SELECTS Y DESPLEGABLES */
+.filtro-input, .filtro-select, input, select {
+  width: 100% !important;
+  box-sizing: border-box;
+  padding: 12px 16px;
   border-radius: 12px;
-  background: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(15, 23, 42, 0.7) !important;
+  color: #FFFFFF !important;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.table-container tbody tr {
-  transition: background 0.25s ease;
+.filtro-input:focus, .filtro-select:focus, input:focus, select:focus {
+  border-color: #3B82F6;
+  background-color: rgba(15, 23, 42, 0.85);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25);
+  outline: none;
 }
 
-.table-container tbody tr:hover {
-  background: #EEF2FF; /* 🔵 azul muy suave */
+select option {
+  background-color: #0F172A;
+  color: #FFFFFF;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  border-radius: 10px;
-  overflow: hidden;
+/* 💳 CARDS DE FORMULARIO (NUEVO / EDITAR) */
+.card {
+  background: rgba(255, 255, 255, 0.04) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
-.table-container tbody tr td {
-  transition: background 0.25s ease, color 0.2s;
-}
-
-.table-container tbody tr:hover td {
-  background: #E0E7FF; /* 🔥 un poco más fuerte */
-  color: #0A1F44; /* azul oscuro elegante */
-}
-
-th {
-  background: linear-gradient(90deg, var(--primary), var(--secondary));
-  color: #ffffff;
-  padding: 12px;
-  text-align: left;
+.card-header h3 {
+  font-family: 'Poppins', sans-serif;
+  color: #FFFFFF;
+  font-size: 20px;
   font-weight: 600;
-  letter-spacing: 0.5px;
-  font-size: 14px;
+  margin: 0 0 4px 0;
 }
 
-td {
-  padding: 12px;
-  border-bottom: 1px solid #eee;
-  color: var(--text);
-  font-size: 14px;
-}
-tr:hover {
-  background: #161e8a; /* azul suave */
-  transition: 0.2s;
-}
-/* Estados */
-.status {
-  font-weight: bold;
-}
-
-.status.ok {
-  color: var(--success);
-}
-
-.status.bad {
-  color: var(--error);
-}
-
-/* Botones */
-button {
-  border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.btn-primary {
-  background: var(--accent);
-  color: #4c8cf3;
-  border: 2px solid #374151; /* 🔥 BORDE COMPLETO */
-  padding: 8px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.btn-primary:hover {
-  background: #1d3c9e; /* azul más oscuro */
-  border-color: #1d3fa3;
-}
-
-.btn-secondary {
-  background: #9dafca;
-}
-
-/* Formulario */
+/* 📝 FORMULARIO GRID SIN APELMAZAMIENTO */
 .form-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
-  margin-top: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px 20px;
+  margin-top: 24px;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 label {
   font-size: 13px;
-  color: var(--text-light);
-  margin-bottom: 5px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 8px !important;
+  letter-spacing: 0.25px;
 }
 
-input, select {
-  padding: 8px;
+/* 📊 TABLA ESTILO CRISTAL OSCURO */
+.table-container {
+  overflow-x: auto;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(15, 23, 42, 0.4);
+  margin-top: 8px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+table thead {
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+table th {
+  color: var(--text-muted);
+  font-family: 'Poppins', sans-serif;
+  padding: 16px;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.75px;
+  text-transform: uppercase;
+}
+
+table tbody tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background-color 0.2s ease;
+}
+
+table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+table td {
+  padding: 16px;
+  color: #FFFFFF;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+/* 🏷️ BADGES ADAPTADOS (MATERIALES Y CONTADORES) */
+.badge {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60A5FA;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.material-badge {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #E2E8F0;
+}
+
+.badge-deleted {
+  background: var(--error-bg);
+  color: var(--error);
+  padding: 2px 8px;
   border-radius: 6px;
-  border: 1px solid #ccc;
+  font-size: 11px;
+  font-weight: 500;
+  margin-left: 6px;
 }
 
-input:focus, select:focus {
-  border-color: var(--accent);
-  outline: none;
+/* ESTADOS DE ENTREGA */
+.status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.status.ok { background: var(--success-bg); color: var(--success); }
+.status.warning { background: var(--warning-bg); color: var(--warning); }
+.status.bad { background: var(--error-bg); color: var(--error); }
+
+/* 🎛️ BOTONES GLOBALES */
+button {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
-/* Acciones */
+.btn-primary {
+  background: var(--brand-gradient);
+  color: white;
+  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.3);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5);
+  filter: brightness(1.1);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.btn-clear {
+  height: 46px;
+  background: transparent;
+  color: #F87171;
+  border: 1px solid rgba(248, 113, 113, 0.3);
+}
+.btn-clear:hover {
+  background: var(--error-bg);
+}
+
+/* Acciones en fila */
+.acciones {
+  display: flex;
+  gap: 6px;
+}
+.acciones button {
+  padding: 8px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 14px;
+}
+.acciones button:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(1.08);
+}
+/* ✉️ CONTENEDOR TOAST ULTRA SEGURO (AGREGAR EN pedidos.component.css) */
+.toast-container {
+  /* Forzamos el posicionamiento absoluto en la pantalla por encima de layouts */
+  position: fixed !important;
+  bottom: 40px !important;
+  right: 40px !important;
+  
+  /* Fondos y bordes base (Verde éxito por defecto) */
+  background: #111827 !important; /* Gris ultra oscuro sólido para evitar transparencias rotas */
+  border: 2px solid #10B981 !important; 
+  border-radius: 14px !important;
+  padding: 16px 24px !important;
+  
+  /* Sombras y profundidad */
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7) !important;
+  
+  /* Capa de prioridad máxima */
+  z-index: 999999 !important; 
+  
+  /* Dimensiones equilibradas */
+  min-width: 320px !important;
+  max-width: 420px !important;
+  display: block !important; /* Evitamos colapsos de flexbox padres */
+  overflow: hidden !important;
+  
+  /* Animación de entrada fluida */
+  animation: toastSlideIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
+}
+
+/* ⚠️ MODIFICADOR PARA ADVERTENCIAS (Fuerza el borde ámbar de validación) */
+.toast-container.warning {
+  border-color: #F59E0B !important;
+}
+
+/* ❌ MODIFICADOR PARA ERRORES CRÍTICOS (Fuerza el borde rojo) */
+.toast-container.error {
+  border-color: #EF4444 !important;
+}
+
 .form-actions {
-  margin-top: 20px;
-  text-align: right;
+  margin-top: 32px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.text-warning {
+  color: #FBBF24;
+  font-size: 12px;
+  margin-top: 6px;
+  display: block;
 }

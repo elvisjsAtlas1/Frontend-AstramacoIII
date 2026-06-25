@@ -1,6 +1,33 @@
-/* You can add global styles to this file, and also import other style files */
+/* ==========================================================================
+   🎨 ESTILOS GLOBALES - ASTRAMACO (MODO OSCURO VIVO)
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap');
+
 html, body {
-  height: 100%;
   margin: 0;
   padding: 0;
+  height: 100%;
+  font-family: 'Inter', sans-serif;
+  
+  /* 🔥 El fondo oscuro con luces sutiles del Login ahora es la base de TODA la app */
+  background: radial-gradient(circle at 15% 15%, #2563EB, transparent 35%),
+              radial-gradient(circle at 85% 85%, #7C3AED, transparent 40%),
+              linear-gradient(135deg, #0F172A, #090D16) !important;
+  background-attachment: fixed !important; /* Mantiene el fondo quieto al hacer scroll */
+  color: #FFFFFF;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 🔵 FORZAR CONTENEDORES TRANSPARENTES */
+.content {
+  background: transparent !important;
+  padding: 40px;
+  min-height: calc(100vh - 75px);
+  box-sizing: border-box;
+}
+
+/* Corrección para que las vistas internas hereden bien la tipografía */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
+  color: #FFFFFF;
 }

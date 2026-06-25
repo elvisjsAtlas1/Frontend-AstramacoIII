@@ -1,78 +1,88 @@
-/* RESET */
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Poppins', sans-serif;
-}
+/* EN TU app.component.css */
 
-/* 🔵 TOPBAR */
+/* 🔵 BARRA SUPERIOR OSCURA CRISTALINA */
 .topbar {
-  height: 70px;
-  background: linear-gradient(90deg, #1E3A8A, #1E40AF);
-  color: white;
+  height: 75px;
+  /* Fondo oscuro traslúcido para que no se vea blanco jamás */
+  background: rgba(15, 23, 42, 0.6) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  color: white !important;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  padding: 0 30px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  padding: 0 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-/* LOGO */
+/* LOGO EN DEGRADADO */
 .logo h2 {
   margin: 0;
-  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: 0.5px;
+  background: linear-gradient(135deg, #3B82F6, #8B5CF6) !important; /* Azul + Morado del login */
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
 }
 
-/* MENU */
+/* MENÚ */
 .menu {
   display: flex;
-  gap: 25px;
+  gap: 8px;
 }
 
 .menu a {
-  color: white;
+  color: #94A3B8 !important; /* Gris suave por defecto */
   text-decoration: none;
   font-weight: 500;
-  position: relative;
-  transition: 0.3s;
+  font-size: 14px;
+  padding: 10px 18px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
-/* EFECTO HOVER */
-.menu a::after {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 0%;
-  height: 2px;
-  background: white;
-  transition: 0.3s;
+.menu a:hover {
+  color: #FFFFFF !important;
+  background: rgba(255, 255, 255, 0.05) !important;
 }
 
-.menu a:hover::after {
-  width: 100%;
+/* 🌟 PESTAÑA ACTIVA CON LUZ DEL LOGIN */
+.menu a.active-link {
+  color: #FFFFFF !important;
+  /* Mezcla viva azul/morada sutil para la pestaña seleccionada */
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(124, 58, 237, 0.2)) !important;
+  border: 1px solid rgba(99, 102, 241, 0.4) !important;
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+  font-weight: 600;
 }
 
-/* BOTÓN LOGOUT */
+/* 🟥 CERRAR SESIÓN */
 .logout {
-  background: #DC2626;
-  border: none;
-  padding: 8px 15px;
-  border-radius: 6px;
-  color: white;
+  background: rgba(239, 68, 68, 0.1) !important;
+  border: 1px solid rgba(239, 68, 68, 0.2) !important;
+  padding: 10px 20px;
+  border-radius: 12px;
+  color: #F87171 !important;
+  font-weight: 600;
+  font-size: 13px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.2s ease;
 }
 
 .logout:hover {
-  background: #B91C1C;
-}
-
-/* CONTENIDO */
-.content {
-  padding: 30px;
-  background: #F1F5F9;
-  min-height: calc(100vh - 70px);
+  background: #EF4444 !important;
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+  transform: translateY(-1px);
 }

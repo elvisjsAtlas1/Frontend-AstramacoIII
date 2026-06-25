@@ -1,101 +1,75 @@
-/* 🔥 CONTENEDOR PRINCIPAL */
+/* 🌍 GLOBAL Y FUENTES */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 🔥 CONTENEDOR PRINCIPAL CON FONDO DINÁMICO */
 .login-container {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #0F172A, #1E3A8A);
+  /* Degradado moderno, más profundo y vivo */
+  background: radial-gradient(circle at 20% 20%, #2563EB, transparent 40%),
+              radial-gradient(circle at 80% 80%, #7C3AED, transparent 50%),
+              linear-gradient(135deg, #0F172A, #1E1B4B);
   font-family: 'Inter', sans-serif;
+  overflow: hidden;
+  position: relative;
 }
 
-/* 💳 TARJETA */
+/* 💳 TARJETA MODERNA (GLASSMORPHISM) */
 .login-card {
-  background: #ffffff;
-  padding: 40px;
-  width: 320px;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.08); /* Semi-transparente */
+  backdrop-filter: blur(16px); /* Efecto de vidrio esmerilado */
+  -webkit-backdrop-filter: blur(16px);
+  padding: 45px 35px;
+  width: 360px;
+  border-radius: 24px; /* Bordes más amigables y modernos */
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Brillo en el borde del cristal */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   text-align: center;
-  animation: fadeIn 0.6s ease;
+  animation: slideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #FFFFFF;
 }
 
 /* 🧾 TITULO */
 .login-card h2 {
-  margin-bottom: 10px;
-  color: #1E3A8A;
   font-family: 'Poppins', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  background: linear-gradient(to right, #FFFFFF, #E2E8F0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* SUBTITULO */
 .subtitle {
-  margin-bottom: 25px;
-  color: #6B7280;
+  margin-bottom: 30px;
+  color: #94A3B8;
   font-size: 14px;
 }
 
 /* 📦 FORM GROUP */
 .form-group {
   text-align: left;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 /* LABEL */
 .form-group label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   font-size: 13px;
-  color: #374151;
-}
-
-/* INPUT */
-.form-group input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #D1D5DB;
-  border-radius: 6px;
-  outline: none;
-  transition: 0.3s;
-  font-size: 14px;
-}
-
-/* EFECTO FOCUS */
-.form-group input:focus {
-  border-color: #3B82F6;
-  box-shadow: 0 0 5px rgba(59,130,246,0.3);
-}
-
-/* 🔵 BOTON */
-button {
-  width: 100%;
-  padding: 12px;
-  background: #1E3A8A;
-  color: white;
-  border: none;
-  border-radius: 6px;
   font-weight: 500;
-  margin-top: 10px;
-  cursor: pointer;
-  transition: 0.3s;
+  color: #CBD5E1;
+  letter-spacing: 0.5px;
 }
 
-/* HOVER */
-button:hover {
-  background: #3B82F6;
-}
-
-/* ✨ ANIMACION */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* INPUT CON ICONO */
+/* INPUT CON ICONO CONTENEDOR */
 .input-icon {
   position: relative;
 }
@@ -104,36 +78,77 @@ button:hover {
 .input-icon i {
   position: absolute;
   top: 50%;
-  left: 10px;
+  left: 14px;
   transform: translateY(-50%);
-  color: #6B7280;
-  font-size: 14px;
+  color: #64748B;
+  font-size: 16px;
+  transition: color 0.3s ease;
 }
 
-/* INPUT CON ESPACIO PARA ICONO */
+/* INPUT ESTILIZADO */
 .input-icon input {
   width: 100%;
-  padding: 10px 10px 10px 35px;
-  border: 1px solid #D1D5DB;
-  border-radius: 6px;
+  padding: 12px 12px 12px 42px;
+  background: rgba(15, 23, 42, 0.6); /* Fondo oscuro interno */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
   outline: none;
   font-size: 14px;
-  box-sizing: border-box;
+  color: #FFFFFF;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* FOCUS */
+.input-icon input::placeholder {
+  color: #64748B;
+}
+
+/* EFECTO FOCUS EN INPUT e ICONO */
 .input-icon input:focus {
   border-color: #3B82F6;
-  box-shadow: 0 0 5px rgba(59,130,246,0.3);
+  background: rgba(15, 23, 42, 0.8);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
 }
 
-/* ICONO ACTIVO */
-.input-icon input:focus + i,
-.input-icon input:focus ~ i {
+.input-icon input:focus + i {
   color: #3B82F6;
 }
 
-/* GLOBAL */
-* {
-  box-sizing: border-box;
+/* 🔵 BOTON VIVO con degradado */
+button {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #3B82F6, #2563EB);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  margin-top: 15px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* HOVER Y INTERACCIÓN DEL BOTON */
+button:hover {
+  background: linear-gradient(135deg, #60A5FA, #3B82F6);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* ✨ ANIMACIÓN DE ENTRADA SUAVE (Smooth Slide Up) */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

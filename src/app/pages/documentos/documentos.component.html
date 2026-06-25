@@ -1,151 +1,196 @@
 <div class="container">
 
-  <!-- 📊 LISTADO -->
   <div class="card">
     <div class="card-header">
-      <h2>Control de Documentos</h2>
-      <button class="btn-secondary" (click)="cargarTransportistas()">
-        🔄 Recargar
-      </button>
+      <h2>📋 Control de Documentos</h2>
+      <div class="header-actions">
+        <button class="btn-secondary" (click)="refrescar()">
+          🔄 Recargar
+        </button>
+      </div>
     </div>
 
     <div class="table-container">
       <table>
         <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>DNI</th>
-          <th>SOAT</th>
-          <th>REV. TEC</th>
-          <th>LICENCIA</th>
-          <th>TARJETA</th>
-          <th>Acción</th>
-        </tr>
+          <tr>
+            <th>Nombre</th>
+            <th>DNI</th>
+            <th>SOAT</th>
+            <th>REV. TEC</th>
+            <th>LICENCIA</th>
+            <th>TARJETA</th>
+            <th>Acción</th>
+          </tr>
         </thead>
 
         <tbody>
-        <tr *ngFor="let t of transportistas">
-          <td>{{ t.nombre }} {{ t.apellidos }}</td>
-          <td>{{ t.dni }}</td>
+          <ng-container *ngFor="let t of transportistas; trackBy: trackById">
+            
+            <tr [class.row-selected]="selectedTransportistaId === t.id">
+              <td><strong>{{ t.nombre }} {{ t.apellidos }}</strong></td>
+              <td><code>{{ t.dni }}</code></td>
 
-          <td>
-              <span class="status"
-                    [class.ok]="t.documentosMap?.SOAT"
-                    [class.bad]="!t.documentosMap?.SOAT">
-                {{ t.documentosMap?.SOAT ? '✔' : '✖' }}
-              </span>
-          </td>
+              <td>
+                <span class="status" [class.ok]="t.documentosMap.SOAT" [class.bad]="!t.documentosMap.SOAT">
+                  {{ t.documentosMap.SOAT ? '✔' : '✘' }}
+                </span>
+              </td>
+              <td>
+                <span class="status" [class.ok]="t.documentosMap.REVISION_TECNICA" [class.bad]="!t.documentosMap.REVISION_TECNICA">
+                  {{ t.documentosMap.REVISION_TECNICA ? '✔' : '✘' }}
+                </span>
+              </td>
+              <td>
+                <span class="status" [class.ok]="t.documentosMap.LICENCIA" [class.bad]="!t.documentosMap.LICENCIA">
+                  {{ t.documentosMap.LICENCIA ? '✔' : '✘' }}
+                </span>
+              </td>
+              <td>
+                <span class="status" [class.ok]="t.documentosMap.TARJETA_CIRCULACION" [class.bad]="!t.documentosMap.TARJETA_CIRCULACION">
+                  {{ t.documentosMap.TARJETA_CIRCULACION ? '✔' : '✘' }}
+                </span>
+              </td>
+              <td>
+                <button class="btn-primary" style="padding: 8px 16px; font-size: 13px;" (click)="seleccionarTransportista(t.id!)">
+                  {{ selectedTransportistaId === t.id ? '👁️ Cerrar' : '✏️ Gestionar' }}
+                </button>
+              </td>
+            </tr>
 
-          <td>
-              <span class="status"
-                    [class.ok]="t.documentosMap?.REVISION_TECNICA"
-                    [class.bad]="!t.documentosMap?.REVISION_TECNICA">
-                {{ t.documentosMap?.REVISION_TECNICA ? '✔' : '✖' }}
-              </span>
-          </td>
+            <tr *ngIf="selectedTransportistaId === t.id" class="row-expansion-panel">
+              <td colspan="7">
+                <div class="inline-form-box">
+                  
+                  <div class="inline-box-header">
+                    <h4>
+                      {{ documentoIdEnEdicion ? '📝 Modificar Documento de' : '➕ Registrar Nuevo Documento para' }} 
+                      <strong>{{ nombreTransportistaSeleccionado }}</strong>
+                    </h4>
+                    <button class="btn-close" (click)="cerrarFormulario()">✖</button>
+                  </div>
 
-          <td>
-              <span class="status"
-                    [class.ok]="t.documentosMap?.LICENCIA"
-                    [class.bad]="!t.documentosMap?.LICENCIA">
-                {{ t.documentosMap?.LICENCIA ? '✔' : '✖' }}
-              </span>
-          </td>
+                  <div class="form-grid">
+                    <div class="form-group">
+                      <label>Tipo Documento *</label>
+                      <select [(ngModel)]="documento.tipoDocumento" [disabled]="documentoIdEnEdicion !== null" class="filtro-select">
+                        <option value="SOAT">SOAT</option>
+                        <option value="REVISION_TECNICA">REVISION TECNICA</option>
+                        <option value="LICENCIA">LICENCIA</option>
+                        <option value="TARJETA_CIRCULACION">TARJETA CIRCULACION</option>
+                        <option value="DNI">DNI</option>
+                      </select>
+                    </div>
 
-          <td>
-              <span class="status"
-                    [class.ok]="t.documentosMap?.TARJETA_CIRCULACION"
-                    [class.bad]="!t.documentosMap?.TARJETA_CIRCULACION">
-                {{ t.documentosMap?.TARJETA_CIRCULACION ? '✔' : '✖' }}
-              </span>
-          </td>
+                    <ng-container *ngIf="esDocumentoConFechas()">
+                      <div class="form-group">
+                        <label>Código / Número *</label>
+                        <input [(ngModel)]="documento.valor" placeholder="Ej: SOAT-2026-001">
+                      </div>
+                      <div class="form-group">
+                        <label>Fecha Emisión *</label>
+                        <input type="date" [(ngModel)]="documento.fechaEmision">
+                      </div>
+                      <div class="form-group">
+                        <label>Fecha Vencimiento *</label>
+                        <input type="date" [(ngModel)]="documento.fechaVencimiento">
+                      </div>
+                    </ng-container>
 
-          <td>
-            <button class="btn-primary"
-                    (click)="seleccionarTransportista(t.id)">
-              Editar
-            </button>
-          </td>
-        </tr>
+                    <ng-container *ngIf="!esDocumentoConFechas()">
+                      <div class="form-group">
+                        <label>Estado *</label>
+                        <select [(ngModel)]="documento.valor" class="filtro-select">
+                          <option value="SI">SI (Vigente)</option>
+                          <option value="NO">NO (No vigente)</option>
+                        </select>
+                      </div>
+                    </ng-container>
+
+                    <div class="form-group">
+                      <label>Estado en Sistema</label>
+                      <select [(ngModel)]="documento.activo" class="filtro-select">
+                        <option [ngValue]="true">🟢 Activo (Aparece como ✔)</option>
+                        <option [ngValue]="false">🔴 Inactivo (Aparece como ✘)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-actions">
+                    <button class="btn-primary" (click)="guardarCambiosDocumento()">
+                      {{ documentoIdEnEdicion ? '💾 Guardar Cambios' : '➕ Agregar Documento' }}
+                    </button>
+                    <button class="btn-secondary" (click)="cancelarEdicionInterna()">Cancelar</button>
+                  </div>
+
+                  <div class="documentos-lista" style="margin-top: 32px;">
+                    <h5>🛠️ Modificar Estado o Eliminar Documentos Existentes</h5>
+                    
+                    <div class="table-container" style="background: rgba(15, 23, 42, 0.4); border-color: rgba(255,255,255,0.05);">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Tipo</th>
+                            <th>Valor / Código</th>
+                            <th>Emisión</th>
+                            <th>Vencimiento</th>
+                            <th>Visualización</th>
+                            <th>Acciones</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let doc of documentos">
+                            <td><strong>{{ doc.tipoDocumento }}</strong></td>
+                            <td><span class="material-badge">{{ doc.valor }}</span></td>
+                            <td><code>{{ doc.fechaEmision || '-' }}</code></td>
+                            <td><code>{{ doc.fechaVencimiento || '-' }}</code></td>
+                            <td>
+                              <button class="status-text" 
+                                      [class.ok]="doc.activo" 
+                                      [class.bad]="!doc.activo"
+                                      (click)="alternarEstadoActivo(doc)"
+                                      style="border: none; cursor: pointer; padding: 6px 12px; font-weight: bold; border-radius: 4px;"
+                                      title="Click para cambiar estado alternativo">
+                                {{ doc.activo ? '✔ Activo' : '✘ Inactivo' }}
+                              </button>
+                            </td>
+                            <td>
+                              <div class="acciones">
+                                <button style="background: rgba(59, 130, 246, 0.12); color: #60A5FA; border: 1px solid rgba(59,130,246,0.2);" 
+                                        (click)="cargarDocumentoEnFormulario(doc)" 
+                                        title="Jalar al formulario para editar">
+                                  ✏️ Editar
+                                </button>
+                                <button class="btn-delete" (click)="eliminarDocumento(doc.id!)" title="Eliminar">🗑️</button>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr *ngIf="documentos.length === 0">
+                            <td colspan="6" style="text-align: center; padding: 24px; color: var(--text-muted); font-size: 13px;">
+                              💡 Este transportista no cuenta con documentos registrados actualmente.
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                </div>
+              </td>
+            </tr>
+
+          </ng-container>
         </tbody>
       </table>
     </div>
   </div>
 
-  <!-- 📝 FORMULARIO -->
-  <div class="card" *ngIf="selectedTransportistaId">
-
-    <div class="card-header">
-      <h3>Editar Documentos</h3>
+  <div class="toast-container" *ngIf="toast.visible" [class.error]="toast.isError" [class.warning]="toast.isWarning">
+    <div class="toast-content">
+      <span class="toast-icon">{{ toast.isError ? '❌' : toast.isWarning ? '⚠️' : '✅' }}</span>
+      <p class="toast-message">{{ toast.message }}</p>
     </div>
-
-    <div class="form-grid">
-
-      <!-- Tipo -->
-      <div class="form-group">
-        <label for="tipoDocumento">Tipo Documento</label>
-        <select id="tipoDocumento" name="tipoDocumento"
-                [(ngModel)]="documento.tipoDocumento">
-          <option value="SOAT">SOAT</option>
-          <option value="REVISION_TECNICA">REVISION TECNICA</option>
-          <option value="LICENCIA">LICENCIA</option>
-          <option value="TARJETA_CIRCULACION">TARJETA</option>
-        </select>
-      </div>
-
-      <!-- Campos con fechas -->
-      <ng-container *ngIf="esDocumentoConFechas()">
-        <div class="form-group">
-          <label for="valor">Código / Número</label>
-          <input id="valor" name="valor"
-                 [(ngModel)]="documento.valor">
-        </div>
-
-        <div class="form-group">
-          <label for="fechaEmision">Fecha Emisión</label>
-          <input id="fechaEmision" name="fechaEmision"
-                 type="date"
-                 [(ngModel)]="documento.fechaEmision">
-        </div>
-
-        <div class="form-group">
-          <label for="fechaVencimiento">Fecha Vencimiento</label>
-          <input id="fechaVencimiento" name="fechaVencimiento"
-                 type="date"
-                 [(ngModel)]="documento.fechaVencimiento">
-        </div>
-      </ng-container>
-
-      <!-- Campos simples -->
-      <ng-container *ngIf="!esDocumentoConFechas()">
-        <div class="form-group">
-          <label for="estadoDocumento">Estado</label>
-          <select id="estadoDocumento" name="estadoDocumento"
-                  [(ngModel)]="documento.valor">
-            <option value="SI">SI</option>
-            <option value="NO">NO</option>
-          </select>
-        </div>
-      </ng-container>
-
-      <!-- Activo -->
-      <div class="form-group">
-        <label for="activo">Activo</label>
-        <select id="activo" name="activo"
-                [(ngModel)]="documento.activo">
-          <option [ngValue]="true">Activo</option>
-          <option [ngValue]="false">Inactivo</option>
-        </select>
-      </div>
-
-    </div>
-
-    <div class="form-actions">
-      <button class="btn-primary" (click)="crearDocumento()">
-        Guardar Documento
-      </button>
-    </div>
-
+    <div class="toast-progress"></div>
   </div>
 
 </div>
