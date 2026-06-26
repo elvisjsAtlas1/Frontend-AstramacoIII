@@ -48,8 +48,8 @@ export class CargasComponent implements OnInit {
 
   cargarCargas(): void {
     this.cargaService.listarTodas().subscribe({
-      next: (data) => {
-        this.cargas = data ?? [];
+      next: (data: any) => {
+        this.cargas = data.content ?? [];
         this.filtrarCargas();
         
         if (this.cargas.length > 0) {
